@@ -17,8 +17,12 @@ public record RecommendationResponse (
         List<RecommendationDTO> recommendations  // Список подходящих продуктов
 ) {
     public RecommendationResponse {
-        if (userId == null) throw new IllegalArgumentException("User ID cannot be null");
-        if (recommendations == null) recommendations = List.of();
+        if (userId == null){
+            throw new IllegalArgumentException("User ID cannot be null");
+        }
+        if (recommendations == null){
+            recommendations = List.of();
+        }
     }
 
     // Удобный конструктор для случая без рекомендаций
