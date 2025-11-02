@@ -12,7 +12,7 @@
 	<artifactId>recommendations-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>recommendations-service</name>
-	<description>Demo project for Spring Boot</description>
+	<description>service that provides recommendations on banking products</description>
 	<url/>
 	<licenses>
 		<license/>
@@ -48,6 +48,10 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.flywaydb</groupId>
+			<artifactId>flyway-core</artifactId>
 		</dependency>
 	</dependencies>
 
