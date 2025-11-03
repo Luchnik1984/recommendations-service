@@ -42,7 +42,7 @@ public class UserStories1FinalTest {
     @Test
     void testTransactionTypesInDatabase() {
         assertDoesNotThrow(() -> {
-            testRepository.getTransactionsCount(); // Если не упадет - подключение работает
+            testRepository.getTransactionsCount();
         }, "Should be able to query transactions table");
     }
 }
