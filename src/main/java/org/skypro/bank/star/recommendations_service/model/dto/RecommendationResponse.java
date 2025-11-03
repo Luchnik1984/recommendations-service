@@ -25,7 +25,6 @@ public record RecommendationResponse (
         }
     }
 
-    // Удобный конструктор для случая без рекомендаций
     public RecommendationResponse(UUID userId) {
         this(userId, List.of());
     }

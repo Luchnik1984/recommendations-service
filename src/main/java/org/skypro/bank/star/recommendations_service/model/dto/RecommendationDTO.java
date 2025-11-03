@@ -7,12 +7,12 @@ import java.util.UUID;
  * Соответствует спецификации из ТЗ для массива recommendations
  */
 public record RecommendationDTO(
-        UUID id,        // ID продукта из ТЗ (например: "147f6a0f-3b91-413b-ab99-87f081d60d5a")
-        String name,    // Название продукта (например: "Invest 500")
-        String text     // Текстовое описание из ТЗ
+        UUID id,
+        String name,
+        String text
 ) {
     public RecommendationDTO {
-        // Валидация входных параметров
+
         if (id == null){
             throw new IllegalArgumentException("Product ID cannot be null");
         }
