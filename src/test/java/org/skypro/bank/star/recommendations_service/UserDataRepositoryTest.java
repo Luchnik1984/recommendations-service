@@ -25,6 +25,7 @@ class UserDataRepositoryTest {
 
     @InjectMocks
     private UserDataRepositoryImpl userDataRepository;
+    private final BigDecimal totalDepositAmount = BigDecimal.valueOf(1_500);
 
     @Test
     void testHasProductType() {
@@ -41,10 +42,10 @@ class UserDataRepositoryTest {
     void testGetTotalDepositsAmount() {
         UUID userId = UUID.randomUUID();
         when(jdbcTemplate.queryForObject(anyString(), eq(BigDecimal.class), any(), any()))
-                .thenReturn(new BigDecimal("1500"));
+                .thenReturn(totalDepositAmount);
 
         BigDecimal result = userDataRepository.getTotalDepositsAmount(userId, ProductType.SAVING);
 
-        assertEquals(new BigDecimal("1500"), result);
+        assertEquals(totalDepositAmount, result);
     }
 }

@@ -53,13 +53,13 @@ public class UserDataRepositoryImpl implements UserDataRepository {
 
     public BigDecimal getTotalWithdrawalsAmount(UUID userId, ProductType productType) {
         String sql = """
-             SELECT COALESCE(SUM(t.amount), 0) AS total_withdrawals
-                FROM TRANSACTIONS t
-                INNER JOIN PRODUCTS p ON t.product_id = p.id
-                WHERE t.user_id = ?
-                AND p.type = ?
-                AND t.type = 'WITHDRAW';
-             """;
+                SELECT COALESCE(SUM(t.amount), 0) AS total_withdrawals
+                   FROM TRANSACTIONS t
+                   INNER JOIN PRODUCTS p ON t.product_id = p.id
+                   WHERE t.user_id = ?
+                   AND p.type = ?
+                   AND t.type = 'WITHDRAW';
+                """;
         return jdbcTemplate.queryForObject(sql, BigDecimal.class, userId, productType.name());
     }
 

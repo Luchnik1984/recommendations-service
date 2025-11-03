@@ -1,6 +1,7 @@
 package org.skypro.bank.star.recommendations_service.repository;
 
 import org.skypro.bank.star.recommendations_service.enums.ProductType;
+
 import java.math.BigDecimal;
 import java.util.UUID;
 

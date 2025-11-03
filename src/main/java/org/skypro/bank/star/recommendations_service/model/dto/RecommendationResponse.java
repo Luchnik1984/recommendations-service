@@ -10,17 +10,17 @@ import java.util.UUID;
  * Соответствует спецификации из ТЗ для основного ответа
  */
 
-public record RecommendationResponse (
+public record RecommendationResponse(
 
         @JsonProperty("user_id")
         UUID userId,                    // ID пользователя из запроса
         List<RecommendationDTO> recommendations  // Список подходящих продуктов
 ) {
     public RecommendationResponse {
-        if (userId == null){
+        if (userId == null) {
             throw new IllegalArgumentException("User ID cannot be null");
         }
-        if (recommendations == null){
+        if (recommendations == null) {
             recommendations = List.of();
         }
     }

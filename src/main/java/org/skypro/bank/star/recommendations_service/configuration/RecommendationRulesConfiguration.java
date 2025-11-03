@@ -1,9 +1,5 @@
 package org.skypro.bank.star.recommendations_service.configuration;
 
-import org.skypro.bank.star.recommendations_service.rule.Invest500RuleSet;
-import org.skypro.bank.star.recommendations_service.rule.SimpleCreditRuleSet;
-import org.skypro.bank.star.recommendations_service.rule.TopSavingRuleSet;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import java.math.BigDecimal;
@@ -21,36 +17,36 @@ public class RecommendationRulesConfiguration {
     public static final BigDecimal INVEST_500_SAVING_MIN = BigDecimal.valueOf(1_000);
     public static final String INVEST_500_DESCRIPTION =
             """
-              Откройте свой путь к успеху с индивидуальным инвестиционным счетом (ИИС) от нашего банка!\
-              Воспользуйтесь налоговыми льготами и начните инвестировать с умом.\
-              Пополните счет до конца года и получите выгоду в виде вычета на взнос в следующем налоговом периоде.\
-              Не упустите возможность разнообразить свой портфель,
-              снизить риски и следить за актуальными рыночными тенденциями.\
-              Откройте ИИС сегодня и станьте ближе к финансовой независимости!
-            """;
+                      Откройте свой путь к успеху с индивидуальным инвестиционным счетом (ИИС) от нашего банка!\
+                      Воспользуйтесь налоговыми льготами и начните инвестировать с умом.\
+                      Пополните счет до конца года и получите выгоду в виде вычета на взнос в следующем налоговом периоде.\
+                      Не упустите возможность разнообразить свой портфель,
+                      снизить риски и следить за актуальными рыночными тенденциями.\
+                      Откройте ИИС сегодня и станьте ближе к финансовой независимости!
+                    """;
 
     public static final UUID SIMPLE_CREDIT_PRODUCT_ID = UUID.fromString("ab138afb-f3ba-4a93-b74f-0fcee86d447f");
     public static final String SIMPLE_CREDIT_PRODUCT_NAME = "Простой кредит";
     public static final BigDecimal SIMPLE_CREDIT_MIN_WITHDRAWALS = BigDecimal.valueOf(100_000);
     public static final String SIMPLE_CREDIT_DESCRIPTION =
             """
-                     Откройте мир выгодных кредитов с нами!\
+                    Откройте мир выгодных кредитов с нами!\
                     
-                     Ищете способ быстро и без лишних хлопот получить нужную сумму?\
-                     Тогда наш выгодный кредит — именно то, что вам нужно!\
-                     Мы предлагаем низкие процентные ставки,
-                     гибкие условия и индивидуальный подход к каждому клиенту.\
+                    Ищете способ быстро и без лишних хлопот получить нужную сумму?\
+                    Тогда наш выгодный кредит — именно то, что вам нужно!\
+                    Мы предлагаем низкие процентные ставки,
+                    гибкие условия и индивидуальный подход к каждому клиенту.\
                     
-                     Почему выбирают нас: Быстрое рассмотрение заявки.\
-                     Мы ценим ваше время, поэтому процесс рассмотрения заявки занимает всего несколько часов.\
+                    Почему выбирают нас: Быстрое рассмотрение заявки.\
+                    Мы ценим ваше время, поэтому процесс рассмотрения заявки занимает всего несколько часов.\
                     
-                     Удобное оформление. Подать заявку на кредит можно онлайн на нашем сайте или в мобильном приложении.\
+                    Удобное оформление. Подать заявку на кредит можно онлайн на нашем сайте или в мобильном приложении.\
                     
-                     Широкий выбор кредитных продуктов. Мы предлагаем кредиты на различные цели: покупку недвижимости,
-                     автомобиля, образование, лечение и многое другое.\
+                    Широкий выбор кредитных продуктов. Мы предлагаем кредиты на различные цели: покупку недвижимости,
+                    автомобиля, образование, лечение и многое другое.\
                     
-                     Не упустите возможность воспользоваться выгодными условиями кредитования от нашей компании!
-                     """;
+                    Не упустите возможность воспользоваться выгодными условиями кредитования от нашей компании!
+                    """;
 
     public static final UUID TOP_SAVING_PRODUCT_ID = UUID.fromString("59efc529-2fff-41af-baff-90ccd7402925");
     public static final String TOP_SAVING_PRODUCT_NAME = "Top Saving";
@@ -102,11 +98,25 @@ public class RecommendationRulesConfiguration {
             this.threshold2 = threshold2;
         }
 
-        public UUID getProductId() { return productId; }
-        public String getProductName() { return productName; }
-        public String getProductDescription() { return productDescription; }
-        public BigDecimal getThreshold() { return threshold; }
-        public BigDecimal getThreshold2() { return threshold2; }
+        public UUID getProductId() {
+            return productId;
+        }
+
+        public String getProductName() {
+            return productName;
+        }
+
+        public String getProductDescription() {
+            return productDescription;
+        }
+
+        public BigDecimal getThreshold() {
+            return threshold;
+        }
+
+        public BigDecimal getThreshold2() {
+            return threshold2;
+        }
     }
 
     /**

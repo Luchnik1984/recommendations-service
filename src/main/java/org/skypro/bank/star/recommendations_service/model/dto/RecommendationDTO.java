@@ -13,13 +13,13 @@ public record RecommendationDTO(
 ) {
     public RecommendationDTO {
 
-        if (id == null){
+        if (id == null) {
             throw new IllegalArgumentException("Product ID cannot be null");
         }
-        if (name == null || name.isBlank()){
+        if (name == null || name.isBlank()) {
             throw new IllegalArgumentException("Product name cannot be empty");
         }
-        if (text == null || text.isBlank()){
+        if (text == null || text.isBlank()) {
             throw new IllegalArgumentException("Product text cannot be empty");
         }
     }
