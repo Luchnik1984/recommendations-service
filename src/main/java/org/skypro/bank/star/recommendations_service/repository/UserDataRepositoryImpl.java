@@ -33,7 +33,7 @@ public class UserDataRepositoryImpl implements UserDataRepository {
                     AND p.type = ?
                 ) AS has_debit_transactions;
                 """;
-        return Boolean.TRUE.equals(jdbcTemplate.queryForObject(sql, Boolean.class, userId, productType));
+        return jdbcTemplate.queryForObject(sql, Boolean.class, userId, productType.name());
     }
 
     @Override
