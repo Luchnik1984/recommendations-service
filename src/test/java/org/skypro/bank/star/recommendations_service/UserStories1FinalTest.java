@@ -6,10 +6,12 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.skypro.bank.star.recommendations_service.repository.TestRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.test.context.ActiveProfiles;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
+@ActiveProfiles("test")
 public class UserStories1FinalTest {
 
     private static final Logger logger = LoggerFactory.getLogger(UserStories1FinalTest.class);
