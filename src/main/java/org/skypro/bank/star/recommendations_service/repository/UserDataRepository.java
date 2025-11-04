@@ -1,6 +1,7 @@
 package org.skypro.bank.star.recommendations_service.repository;
 
 import org.skypro.bank.star.recommendations_service.enums.ProductType;
+import org.skypro.bank.star.recommendations_service.enums.TransactionType;
 
 import java.math.BigDecimal;
 import java.util.UUID;
@@ -18,14 +19,9 @@ public interface UserDataRepository {
     boolean hasProductType(UUID userId, ProductType productType);
 
     /**
-     * Получает общую сумму пополнений по типу продукта
+     * Получает общую сумму по типу транзакции и типу продукта
      */
-    BigDecimal getTotalDepositsAmount(UUID userId, ProductType productType);
-
-    /**
-     * Получает общую сумму трат по типу продукта
-     */
-    BigDecimal getTotalWithdrawalsAmount(UUID userId, ProductType productType);
+    BigDecimal getTotalAmount(UUID userId, ProductType productType, TransactionType transactionType);
 
     /**
      * Проверяем, больше ли сумма пополнений суммы трат для указанного типа продукта

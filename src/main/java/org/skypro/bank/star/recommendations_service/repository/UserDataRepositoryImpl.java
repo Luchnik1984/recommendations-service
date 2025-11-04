@@ -1,6 +1,7 @@
 package org.skypro.bank.star.recommendations_service.repository;
 
 import org.skypro.bank.star.recommendations_service.enums.ProductType;
+import org.skypro.bank.star.recommendations_service.enums.TransactionType;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -37,36 +38,26 @@ public class UserDataRepositoryImpl implements UserDataRepository {
     }
 
     @Override
-    public BigDecimal getTotalDepositsAmount(UUID userId, ProductType productType) {
+    public BigDecimal getTotalAmount(
+            UUID userId, ProductType productType, TransactionType transactionType) {
         String sql = """
                 SELECT COALESCE(SUM(t.amount), 0) AS total_deposits
                 FROM TRANSACTIONS t
                 INNER JOIN PRODUCTS p ON t.product_id = p.id
                 WHERE t.user_id = ?
                 AND p.type = ?
-                AND t.type = 'DEPOSIT';
+                AND t.type = ?;
                 """;
-        return jdbcTemplate.queryForObject(sql, BigDecimal.class, userId, productType.name());
+        return jdbcTemplate.queryForObject(sql, BigDecimal.class, userId, productType.name(), transactionType.name());
     }
 
-    @Override
-
-    public BigDecimal getTotalWithdrawalsAmount(UUID userId, ProductType productType) {
-        String sql = """
-                SELECT COALESCE(SUM(t.amount), 0) AS total_withdrawals
-                   FROM TRANSACTIONS t
-                   INNER JOIN PRODUCTS p ON t.product_id = p.id
-                   WHERE t.user_id = ?
-                   AND p.type = ?
-                   AND t.type = 'WITHDRAW';
-                """;
-        return jdbcTemplate.queryForObject(sql, BigDecimal.class, userId, productType.name());
-    }
 
     @Override
-    public boolean isDepositsGreaterThanWithdrawals(UUID userId, ProductType productType) {
-        BigDecimal deposits = getTotalDepositsAmount(userId, productType);
-        BigDecimal spends = getTotalWithdrawalsAmount(userId, productType);
+    public boolean isDepositsGreaterThanWithdrawals(
+            UUID userId, ProductType productType) {
+
+        BigDecimal deposits = getTotalAmount(userId, productType, TransactionType.DEPOSIT);
+        BigDecimal spends = getTotalAmount(userId, productType, TransactionType.WITHDRAW);
         return deposits.compareTo(spends) > 0;
     }
 

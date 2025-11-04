@@ -2,6 +2,7 @@ package org.skypro.bank.star.recommendations_service.rule;
 
 import org.skypro.bank.star.recommendations_service.configuration.RecommendationRulesConfiguration;
 import org.skypro.bank.star.recommendations_service.enums.ProductType;
+import org.skypro.bank.star.recommendations_service.enums.TransactionType;
 import org.skypro.bank.star.recommendations_service.model.dto.RecommendationDTO;
 import org.skypro.bank.star.recommendations_service.repository.UserDataRepositoryImpl;
 import org.springframework.stereotype.Component;
@@ -27,19 +28,24 @@ public class SimpleCreditRuleSet implements RecommendationRuleSet {
 
         boolean rule1 = !userDataRepository.hasProductType(userId, ProductType.CREDIT);
 
+        if (!rule1) return Optional.empty();
+
         boolean rule2 = userDataRepository.isDepositsGreaterThanWithdrawals(userId, ProductType.DEBIT);
 
-        BigDecimal debitWithdrawals = userDataRepository.getTotalWithdrawalsAmount(userId, ProductType.DEBIT);
+        if (!rule2) return Optional.empty();
+
+        BigDecimal debitWithdrawals = userDataRepository.getTotalAmount(
+                userId,
+                ProductType.DEBIT,
+                TransactionType.WITHDRAW);
+
         boolean rule3 = debitWithdrawals.compareTo(config.getThreshold()) > 0;
 
-        if (rule1 && rule2 && rule3) {
-            return Optional.of(new RecommendationDTO(
-                    config.getProductId(),
-                    config.getProductName(),
-                    config.getProductDescription()
-            ));
-        }
+        if (!rule3) return Optional.empty();
 
-        return Optional.empty();
+        return Optional.of(new RecommendationDTO(
+                config.getProductId(),
+                config.getProductName(),
+                config.getProductDescription()));
     }
 }
