@@ -14,7 +14,7 @@ public class RecommendationsDataSourceConfiguration {
 
     @Bean(name = "recommendationsDataSource")
     public DataSource recommendationsDataSource(
-            @Value("${application.recommendations-db.url:jdbc:h2:file:./src/main/resources/transaction;DB_CLOSE_ON_EXIT=FALSE}")
+            @Value("${application.recommendations-db.url}")
             String recommendationsUrl) {
         HikariDataSource dataSource = new HikariDataSource();
         dataSource.setJdbcUrl(recommendationsUrl);
