@@ -33,7 +33,7 @@ public class RuleQuery {
      */
     @Enumerated(EnumType.STRING)
     @Column(name = "query_type", nullable = false, length = 50)
-    private QueryType queryType;
+    private QueryType query;
 
     /**
      * Список аргументов запроса.
@@ -66,12 +66,12 @@ public class RuleQuery {
 
     /**
      * Конструктор для создания запроса с указанием всех параметров.
-     * @param queryType тип запроса
+     * @param query тип запроса
      * @param arguments список аргументов запроса
      * @param negate флаг отрицания результата
      */
-    public RuleQuery(QueryType queryType, List<String> arguments, boolean negate) {
-        this.queryType = queryType;
+    public RuleQuery(QueryType query, List<String> arguments, boolean negate) {
+        this.query = query;
         this.arguments = arguments != null ? new ArrayList<>(arguments) : new ArrayList<>();
         this.negate = negate;
     }
@@ -84,12 +84,12 @@ public class RuleQuery {
         this.id = id;
     }
 
-    public QueryType getQueryType() {
-        return queryType;
+    public QueryType getQuery() {
+        return query;
     }
 
-    public void setQueryType(QueryType queryType) {
-        this.queryType = queryType;
+    public void setQuery(QueryType queryType) {
+        this.query = queryType;
     }
 
     /**
@@ -132,20 +132,20 @@ public class RuleQuery {
         if (o == null || getClass() != o.getClass()) return false;
         RuleQuery ruleQuery = (RuleQuery) o;
         return negate == ruleQuery.negate &&
-                queryType == ruleQuery.queryType &&
+                query == ruleQuery.query &&
                 Objects.equals(arguments, ruleQuery.arguments);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(queryType, arguments, negate);
+        return Objects.hash(query, arguments, negate);
     }
 
     @Override
     public String toString() {
         return "RuleQuery{" +
                 "id=" + id +
-                ", queryType=" + queryType +
+                ", queryType=" + query +
                 ", arguments=" + arguments +
                 ", negate=" + negate +
                 '}';

@@ -27,7 +27,7 @@ public abstract class RuleQueryExecutor {
     /**
      * Возвращает тип запроса, который обрабатывает данный исполнитель.
      * Каждый исполнитель должен поддерживать ровно один тип запроса.
-     * @return тип запроса, поддерживаемый исполнителем
+     * @return QueryType для поля "query"
      */
     public abstract QueryType getSupportedQueryType();
 
