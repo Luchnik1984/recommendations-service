@@ -60,13 +60,6 @@ public class DynamicRule {
     @OrderColumn(name = "query_order")
     private List<RuleQuery> rule = new ArrayList<>();
 
-    /**
-     * Дата и время создания правила.
-     * Устанавливается автоматически при создании записи.
-     */
-    @CreationTimestamp
-    @Column(name = "created_at", updatable = false)
-    private LocalDateTime createdAt;
 
     public DynamicRule() {
     }
@@ -164,13 +157,6 @@ public class DynamicRule {
         return this.rule.remove(ruleQuery);
     }
 
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
 
     @Override
     public boolean equals(Object o) {
@@ -196,7 +182,6 @@ public class DynamicRule {
                 ", productId=" + productId +
                 ", productText='" + productText + '\'' +
                 ", rules=" + rule +
-                ", createdAt=" + createdAt +
                 '}';
     }
 }
