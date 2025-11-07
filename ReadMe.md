@@ -60,4 +60,6 @@
 
 ### Основное приложение:
 ```bash
+# Выполните скрипт настройки окруженыр
+.scripts/setup-env.sh
 mvn spring-boot:run
