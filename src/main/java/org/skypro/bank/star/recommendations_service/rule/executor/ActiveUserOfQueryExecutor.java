@@ -9,23 +9,25 @@ import java.util.List;
 import java.util.UUID;
 
 @Component
-public class UserOfQueryExecutor implements RuleQueryExecutor{
+public class ActiveUserOfQueryExecutor implements RuleQueryExecutor {
 
     private final UserDataRepositoryImpl userDataRepository;
 
-    public UserOfQueryExecutor(UserDataRepositoryImpl userDataRepository) {
+    public ActiveUserOfQueryExecutor(UserDataRepositoryImpl userDataRepository) {
         this.userDataRepository = userDataRepository;
     }
 
     @Override
     public boolean execute(UUID userId, List<String> arguments) {
         if (arguments.size() == 1) {
-            return userDataRepository.hasProductType(userId, ProductType.valueOf(arguments.get(0)));
+            ProductType productType = ProductType.valueOf(arguments.get(0));
+            int transactionCount = userDataRepository.getTransactionCountByProductType(userId, productType);
+            return transactionCount >= 5;
         } else throw new IllegalArgumentException(" Неверное количество аргументов ");
     }
 
     @Override
     public QueryType getSupportedQueryType() {
-        return QueryType.USER_OF;
+        return QueryType.ACTIVE_USER_OF;
     }
 }

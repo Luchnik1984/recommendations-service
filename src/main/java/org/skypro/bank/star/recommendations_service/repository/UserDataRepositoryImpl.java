@@ -61,4 +61,20 @@ public class UserDataRepositoryImpl implements UserDataRepository {
         return deposits.compareTo(spends) > 0;
     }
 
+    @Override
+    public int getTransactionCountByProductType(UUID userId, ProductType productType) {
+        String sql = """
+            SELECT COUNT(*) AS transaction_count
+            FROM TRANSACTIONS t
+            INNER JOIN PRODUCTS p ON t.product_id = p.id
+            WHERE t.user_id = ?
+            AND p.type = ?;
+            """;
+        return jdbcTemplate.queryForObject(sql, Integer.class, userId, productType.name());
+    }
+
+    public double getTransactionSumByType(UUID userId, ProductType productType, TransactionType transactionType) {
+        BigDecimal totalAmount = getTotalAmount(userId, productType, transactionType);
+        return totalAmount.doubleValue();
+    }
 }
