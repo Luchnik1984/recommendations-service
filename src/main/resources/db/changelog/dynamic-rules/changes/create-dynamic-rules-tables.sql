@@ -29,13 +29,21 @@ CREATE TABLE rule_queries (
         dynamic_rule_id UUID NOT NULL,
         query_type VARCHAR(50) NOT NULL,
         negate BOOLEAN NOT NULL DEFAULT false,
-        query_order INTEGER NOT NULL DEFAULT 0,
 
     -- Внешний ключ на таблицу dynamic_rules
         CONSTRAINT fk_rule_queries_dynamic_rule
             FOREIGN KEY (dynamic_rule_id)
             REFERENCES dynamic_rules(id)
             ON DELETE CASCADE
+
+    -- Валидация типов запросов
+        CONSTRAINT chk_valid_query_type
+            CHECK (query_type IN (
+            'USER_OF',
+            'ACTIVE_USER_OF',
+            'TRANSACTION_SUM_COMPARE',
+            'TRANSACTION_SUM_COMPARE_DEPOSIT_WITHDRAW'
+            ))
 );
 
 COMMENT ON TABLE rule_queries IS 'Таблица запросов (условий) в составе динамических правил';
@@ -56,6 +64,14 @@ CREATE TABLE rule_query_arguments (
             FOREIGN KEY (rule_query_id)
             REFERENCES rule_queries(id)
             ON DELETE CASCADE,
+
+    -- Валидация порядка аргументов
+        CONSTRAINT chk_argument_order_non_negative
+            CHECK (argument_order >= 0),
+
+    -- Валидация непустого значения аргумента
+        CONSTRAINT chk_argument_value_not_empty
+            CHECK (LENGTH(TRIM(argument_value)) > 0),
 
     -- Уникальность комбинации запрос-порядок
         CONSTRAINT uk_rule_query_arguments_order
