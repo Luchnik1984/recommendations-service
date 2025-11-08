@@ -20,6 +20,7 @@ public class RecommendationsDataSourceConfiguration {
         dataSource.setJdbcUrl(recommendationsUrl);
         dataSource.setDriverClassName("org.h2.Driver");
         dataSource.setReadOnly(true);
+        dataSource.setMaximumPoolSize(5);
         return dataSource;
     }
 

@@ -39,3 +39,7 @@ logs/
 # Temp files
 tmp/
 temp/
+
+# Environment configuration files
+configuration.env
+configuration.env.*

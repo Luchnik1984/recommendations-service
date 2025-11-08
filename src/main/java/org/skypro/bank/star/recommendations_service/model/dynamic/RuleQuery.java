@@ -60,7 +60,6 @@ public class RuleQuery {
     @Column(nullable = false)
     private boolean negate = false;
 
-
     public RuleQuery() {
     }
 

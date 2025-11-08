@@ -11,7 +11,7 @@ import org.springframework.test.context.ActiveProfiles;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-@ActiveProfiles("testConnectRealDB")
+@ActiveProfiles("integration-test")
 public class UserStories1FinalTest {
 
     private static final Logger logger = LoggerFactory.getLogger(UserStories1FinalTest.class);
