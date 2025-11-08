@@ -70,11 +70,14 @@
 ```
 
 После выполнения скрипта отредактируйте созданные файлы:
-
+nano для macOS, notepad для Windows
 ```bash
 
 nano configuration.env
-nano configuration.env.dev  
-
+nano configuration.env.dev
 ```
+```bash
 
+notepad configuration.env
+notepad configuration.env.dev  
+```
