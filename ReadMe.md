@@ -75,6 +75,6 @@
 
 nano configuration.env
 nano configuration.env.dev  
-nano configuration.env.test
+
 ```
 
