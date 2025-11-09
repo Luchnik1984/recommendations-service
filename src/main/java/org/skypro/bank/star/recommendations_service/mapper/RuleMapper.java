@@ -8,6 +8,7 @@ import org.skypro.bank.star.recommendations_service.model.dynamic.RuleQuery;
 
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class RuleMapper {
 
@@ -66,15 +67,22 @@ public class RuleMapper {
         dynamicRule.setProductName(dynamicRuleDTO.productName());
         dynamicRule.setProductId(dynamicRuleDTO.productId());
         dynamicRule.setProductText(dynamicRuleDTO.productText());
-        dynamicRule.setRule(
-                Optional.ofNullable(dynamicRuleDTO.rule())
-                        .orElse(Collections.emptyList())
-                        .stream()
-                        .map(RuleMapper::dtoToRuleQuery)
-                        .filter(obj -> true)
-                        .collect(Collectors.toList())
-        );
 
+        List<RuleQuery> ruleQueries = new ArrayList<>();
+        if (dynamicRuleDTO.rule() != null) {
+            for (int i = 0; i < dynamicRuleDTO.rule().size(); i++) {
+                RuleQueryDTO queryDTO = dynamicRuleDTO.rule().get(i);
+                RuleQuery ruleQuery = new RuleQuery(
+                        queryDTO.query(),
+                        Arrays.asList(queryDTO.arguments()),
+                        queryDTO.negate(),
+                        i
+                );
+                ruleQuery.setDynamicRule(dynamicRule);
+                ruleQueries.add(ruleQuery);
+            }
+        }
+        dynamicRule.setRule(ruleQueries);
         return dynamicRule;
     }
 

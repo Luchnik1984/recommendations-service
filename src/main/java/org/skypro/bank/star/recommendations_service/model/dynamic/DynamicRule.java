@@ -57,7 +57,7 @@ public class DynamicRule {
      */
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     @JoinColumn(name = "dynamic_rule_id")
-    @OrderColumn(name = "query_order")
+    @OrderColumn (name = "query_order")
     private List<RuleQuery> rule = new ArrayList<>();
 
 
@@ -181,7 +181,7 @@ public class DynamicRule {
                 ", productName='" + productName + '\'' +
                 ", productId=" + productId +
                 ", productText='" + productText + '\'' +
-                ", rules=" + rule +
+                ", rule=" + rule +
                 '}';
     }
 }

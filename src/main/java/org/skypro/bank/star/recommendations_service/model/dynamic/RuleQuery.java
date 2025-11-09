@@ -68,6 +68,12 @@ public class RuleQuery {
     @JoinColumn(name = "dynamic_rule_id")
     private DynamicRule dynamicRule;
 
+    /**
+     * Порядок выполнения запроса в рамках правила.
+     * Определяет последовательность проверок условий.
+     */
+    @Column(name = "query_order", nullable = false)
+    private Integer queryOrder;
 
     public RuleQuery() {
     }
@@ -77,11 +83,14 @@ public class RuleQuery {
      * @param query тип запроса
      * @param arguments список аргументов запроса
      * @param negate флаг отрицания результата
+     * @param queryOrder порядок выполнения запроса
      */
-    public RuleQuery(QueryType query, List<String> arguments, boolean negate) {
+    public RuleQuery(QueryType query, List<String> arguments, boolean negate, Integer queryOrder) {
         this.query = query;
         this.arguments = arguments != null ? new ArrayList<>(arguments) : new ArrayList<>();
         this.negate = negate;
+        this.queryOrder = queryOrder;
+
     }
 
     public Long getId() {
@@ -125,6 +134,22 @@ public class RuleQuery {
         this.negate = negate;
     }
 
+    public DynamicRule getDynamicRule() {
+        return dynamicRule;
+    }
+
+    public void setDynamicRule(DynamicRule dynamicRule) {
+        this.dynamicRule = dynamicRule;
+    }
+
+    public Integer getQueryOrder() {
+        return queryOrder;
+    }
+
+    public void setQueryOrder(Integer queryOrder) {
+        this.queryOrder = queryOrder;
+    }
+
     /**
      * Сравнивает данный объект с другим объектом на равенство.
      * Два RuleQuery считаются равными, если у них одинаковые queryType, arguments и negate.
@@ -139,12 +164,13 @@ public class RuleQuery {
         RuleQuery ruleQuery = (RuleQuery) o;
         return negate == ruleQuery.negate &&
                 query == ruleQuery.query &&
-                Objects.equals(arguments, ruleQuery.arguments);
+                Objects.equals(arguments, ruleQuery.arguments)&&
+                Objects.equals(queryOrder, ruleQuery.queryOrder);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(query, arguments, negate);
+        return Objects.hash(query, arguments, negate, queryOrder);
     }
 
     @Override
@@ -154,6 +180,7 @@ public class RuleQuery {
                 ", queryType=" + query +
                 ", arguments=" + arguments +
                 ", negate=" + negate +
+                ", queryOrder=" + queryOrder +
                 ", dynamicRule=" + (dynamicRule != null ? dynamicRule.getId() : "null") +
                 '}';
     }
