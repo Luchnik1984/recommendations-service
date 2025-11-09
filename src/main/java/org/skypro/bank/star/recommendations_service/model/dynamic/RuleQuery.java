@@ -19,6 +19,10 @@ import java.util.Objects;
 @Table(name = "rule_queries")
 public class RuleQuery {
 
+
+    @ManyToOne
+    @JoinColumn(name = "dynamic_rule_id", nullable = false)
+    private DynamicRule dynamicRule;
     /**
      * Уникальный идентификатор запроса в базе данных.
      * Генерируется автоматически при сохранении.
@@ -148,5 +152,13 @@ public class RuleQuery {
                 ", arguments=" + arguments +
                 ", negate=" + negate +
                 '}';
+    }
+
+    public DynamicRule getDynamicRule() {
+        return dynamicRule;
+    }
+
+    public void setDynamicRule(DynamicRule dynamicRule) {
+        this.dynamicRule = dynamicRule;
     }
 }

@@ -55,8 +55,7 @@ public class DynamicRule {
      * Запросы выполняются в порядке их следования в списке.
      * При удалении правила все связанные запросы также удаляются (CascadeType.ALL).
      */
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
-    @JoinColumn(name = "dynamic_rule_id")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true, mappedBy = "dynamicRule")
     @OrderColumn(name = "query_order")
     private List<RuleQuery> rule = new ArrayList<>();
 

@@ -63,5 +63,5 @@ public interface DynamicRuleRepository extends JpaRepository<DynamicRule, UUID> 
     @Query("SELECT DISTINCT dr FROM DynamicRule dr JOIN dr.rule rq WHERE rq.query = :queryType")
     List<DynamicRule> findByQueryType(@Param("queryType") String queryType);
 
-    Optional<DynamicRule> saveDynamicRule(RuleRequestDTO ruleRequestDTO);
+    Optional<DynamicRule> save(RuleRequestDTO ruleRequestDTO);
 }
