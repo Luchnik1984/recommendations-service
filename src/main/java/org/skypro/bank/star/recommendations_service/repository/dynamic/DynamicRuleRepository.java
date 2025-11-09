@@ -1,5 +1,6 @@
 package org.skypro.bank.star.recommendations_service.repository.dynamic;
 
+import org.skypro.bank.star.recommendations_service.model.dto.RuleRequestDTO;
 import org.skypro.bank.star.recommendations_service.model.dynamic.DynamicRule;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -61,4 +62,6 @@ public interface DynamicRuleRepository extends JpaRepository<DynamicRule, UUID> 
      */
     @Query("SELECT DISTINCT dr FROM DynamicRule dr JOIN dr.rule rq WHERE rq.query = :queryType")
     List<DynamicRule> findByQueryType(@Param("queryType") String queryType);
+
+    Optional<DynamicRule> saveDynamicRule(RuleRequestDTO ruleRequestDTO);
 }
