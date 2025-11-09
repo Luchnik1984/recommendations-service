@@ -60,6 +60,14 @@ public class RuleQuery {
     @Column(nullable = false)
     private boolean negate = false;
 
+    /**
+     * Связь с родительским DynamicRule.
+     * Обеспечивает каскадное сохранение и установку внешнего ключа.
+     */
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "dynamic_rule_id")
+    private DynamicRule dynamicRule;
+
 
     public RuleQuery() {
     }
@@ -94,8 +102,6 @@ public class RuleQuery {
 
     /**
      * Возвращает список аргументов запроса.
-     * Возвращаемый список является копией для обеспечения иммутабельности.
-     *
      * @return список аргументов запроса
      */
     public List<String> getArguments() {
@@ -148,6 +154,7 @@ public class RuleQuery {
                 ", queryType=" + query +
                 ", arguments=" + arguments +
                 ", negate=" + negate +
+                ", dynamicRule=" + (dynamicRule != null ? dynamicRule.getId() : "null") +
                 '}';
     }
 }

@@ -17,4 +17,4 @@ public record RuleRequestDTO (
         @JsonProperty("product_text")
         String productText,
 
-        List<RuleQuery> rule){}
+        List<RuleQueryDTO> rule){}
