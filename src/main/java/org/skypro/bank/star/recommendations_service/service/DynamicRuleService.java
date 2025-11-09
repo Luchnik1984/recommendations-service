@@ -5,6 +5,7 @@ import org.skypro.bank.star.recommendations_service.model.dto.ListRuleResponse;
 import org.skypro.bank.star.recommendations_service.model.dto.RuleRequestDTO;
 import org.skypro.bank.star.recommendations_service.model.dto.RuleResponse;
 import org.skypro.bank.star.recommendations_service.model.dynamic.DynamicRule;
+import org.skypro.bank.star.recommendations_service.repository.dynamic.DynamicRuleRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -21,7 +22,9 @@ public class DynamicRuleService {
     }
 
     public RuleResponse postDynamicRule(RuleRequestDTO ruleRequestDTO){
-        return RuleMapper.toResponse( dynamicRuleRepository.addDynamicRule());
+
+
+        return RuleMapper.toResponse( dynamicRuleRepository.save(RuleMapper.dtoToDynamicRule(ruleRequestDTO));
     }
 
     public ListRuleResponse getListDynamicRule() {

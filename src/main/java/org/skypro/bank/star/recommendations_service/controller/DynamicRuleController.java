@@ -21,7 +21,7 @@ public class DynamicRuleController {
 
 
     @PostMapping("")
-    public ResponseEntity<RuleResponse> postDynamicRule(RuleRequestDTO ruleRequestDTO) {
+    public ResponseEntity<RuleResponse> postDynamicRule(@RequestBody RuleRequestDTO ruleRequestDTO) {
         return ResponseEntity.ok(dynamicRuleService.postDynamicRule(ruleRequestDTO));
     }
 
