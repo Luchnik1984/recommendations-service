@@ -1,9 +1,6 @@
 package org.skypro.bank.star.recommendations_service.model.dynamic;
 
 import jakarta.persistence.*;
-import org.hibernate.annotations.CreationTimestamp;
-
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -55,8 +52,8 @@ public class DynamicRule {
      * Запросы выполняются в порядке их следования в списке.
      * При удалении правила все связанные запросы также удаляются (CascadeType.ALL).
      */
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
-    @JoinColumn(name = "dynamic_rule_id")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true, mappedBy = "dynamicRule")
+
     @OrderColumn(name = "query_order")
     private List<RuleQuery> rule = new ArrayList<>();
 
@@ -66,8 +63,9 @@ public class DynamicRule {
 
     /**
      * Конструктор для создания правила с указанием основных параметров.
+     *
      * @param productName название рекомендуемого продукта
-     * @param productId UUID рекомендуемого продукта
+     * @param productId   UUID рекомендуемого продукта
      * @param productText текст описания продукта
      */
     public DynamicRule(String productName, UUID productId, String productText) {
@@ -78,16 +76,17 @@ public class DynamicRule {
 
     /**
      * Конструктор для создания правила со всеми параметрами.
+     *
      * @param productName название рекомендуемого продукта
-     * @param productId UUID рекомендуемого продукта
+     * @param productId   UUID рекомендуемого продукта
      * @param productText текст описания продукта
-     * @param rule список условий правила
+     * @param rule        список условий правила
      */
     public DynamicRule(String productName, UUID productId, String productText, List<RuleQuery> rule) {
         this.productName = productName;
         this.productId = productId;
         this.productText = productText;
-        this.rule = rule!= null ? new ArrayList<>(rule) : new ArrayList<>();
+        this.rule = rule != null ? new ArrayList<>(rule) : new ArrayList<>();
     }
 
     public UUID getId() {
@@ -125,6 +124,7 @@ public class DynamicRule {
     /**
      * Возвращает список условий правила.
      * Возвращаемый список является копией для обеспечения иммутабельности.
+     *
      * @return список условий правила
      */
     public List<RuleQuery> getRule() {
@@ -134,14 +134,16 @@ public class DynamicRule {
     /**
      * Устанавливает список условий правила.
      * Внутренний список заменяется копией переданного списка.
+     *
      * @param rule список условий правила
      */
     public void setRule(List<RuleQuery> rule) {
-        this.rule =rule != null ? new ArrayList<>(rule) : new ArrayList<>();
+        this.rule = rule != null ? new ArrayList<>(rule) : new ArrayList<>();
     }
 
     /**
      * Добавляет условие в правило.
+     *
      * @param ruleQuery условие для добавления
      */
     public void addRule(RuleQuery ruleQuery) {
@@ -150,6 +152,7 @@ public class DynamicRule {
 
     /**
      * Удаляет условие из правила.
+     *
      * @param ruleQuery условие для удаления
      * @return true если условие было удалено, false если условие не найдено
      */
@@ -181,8 +184,9 @@ public class DynamicRule {
                 ", productName='" + productName + '\'' +
                 ", productId=" + productId +
                 ", productText='" + productText + '\'' +
-                ", rules=" + rule +
+                ", rule=" + rule +
                 '}';
     }
+
 }
 

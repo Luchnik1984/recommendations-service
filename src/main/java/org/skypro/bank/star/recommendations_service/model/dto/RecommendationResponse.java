@@ -8,13 +8,16 @@ import java.util.UUID;
 /**
  * DTO для ответа API.
  * Соответствует спецификации из ТЗ для основного ответа
+ *
+ * @param userId          - ID пользователя из запроса
+ * @param recommendations - Список подходящих продуктов
  */
 
 public record RecommendationResponse(
 
         @JsonProperty("user_id")
-        UUID userId,                    // ID пользователя из запроса
-        List<RecommendationDTO> recommendations  // Список подходящих продуктов
+        UUID userId,
+        List<RecommendationDTO> recommendations
 ) {
     public RecommendationResponse {
         if (userId == null) {

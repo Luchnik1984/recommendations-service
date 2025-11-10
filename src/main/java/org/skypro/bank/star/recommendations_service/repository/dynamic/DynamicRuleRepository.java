@@ -22,6 +22,7 @@ public interface DynamicRuleRepository extends JpaRepository<DynamicRule, UUID> 
      * Находит все динамические правила, отсортированные по идентификатору.
      * @return список всех динамических правил в БД, отсортированный по ID
      */
+    @Query("SELECT dr FROM DynamicRule dr ORDER BY dr.id")
     List<DynamicRule> findAllByOrderById();
 
     /**
@@ -47,13 +48,6 @@ public interface DynamicRuleRepository extends JpaRepository<DynamicRule, UUID> 
     List<DynamicRule> findByProductNameContainingIgnoreCase(String productName);
 
     /**
-     * Пользовательский JPQL запрос для подсчета общего количества правил в БД.
-     * @return общее количество динамических правил
-     */
-    @Query("SELECT COUNT(dr) FROM DynamicRule dr")
-    long countAllRules();
-
-    /**
      * Пользовательский JPQL запрос для поиска правил по типу запроса.
      * Использует JOIN для поиска в связанной таблице rule_queries.
      * @param queryType тип запроса для поиска
@@ -61,4 +55,6 @@ public interface DynamicRuleRepository extends JpaRepository<DynamicRule, UUID> 
      */
     @Query("SELECT DISTINCT dr FROM DynamicRule dr JOIN dr.rule rq WHERE rq.query = :queryType")
     List<DynamicRule> findByQueryType(@Param("queryType") String queryType);
+
+    // Optional<DynamicRule> save(RuleRequestDTO ruleRequestDTO);
 }

@@ -29,6 +29,7 @@ CREATE TABLE rule_queries (
         dynamic_rule_id UUID NOT NULL,
         query_type VARCHAR(50) NOT NULL,
         negate BOOLEAN NOT NULL DEFAULT false,
+        query_order INTEGER NOT NULL DEFAULT 0,
         CONSTRAINT fk_rule_queries_dynamic_rule
             FOREIGN KEY (dynamic_rule_id)
             REFERENCES dynamic_rules(id)
@@ -39,13 +40,16 @@ CREATE TABLE rule_queries (
             'ACTIVE_USER_OF',
             'TRANSACTION_SUM_COMPARE',
             'TRANSACTION_SUM_COMPARE_DEPOSIT_WITHDRAW'
-            ))
+            )),
+        CONSTRAINT chk_query_order_non_negative
+            CHECK ( query_order>=0 )
 );
 
 COMMENT ON TABLE rule_queries IS 'Таблица запросов (условий) в составе динамических правил';
 
 CREATE INDEX idx_rule_queries_dynamic_rule_id ON rule_queries(dynamic_rule_id);
 CREATE INDEX idx_rule_queries_query_type ON rule_queries(query_type);
+CREATE INDEX idx_rule_queries_query_order ON rule_queries(query_order);
 -- ==========================================================================
 
 -- Таблица для хранения аргументов запросов
@@ -71,6 +75,7 @@ CREATE TABLE rule_query_arguments (
 );
 
 COMMENT ON TABLE rule_query_arguments IS 'Таблица аргументов запросов динамических правил';
+COMMENT ON COLUMN rule_query_arguments.argument_order IS 'Порядок аргументов внутри условия (0, 1, 2, ...)';
 
 CREATE INDEX idx_rule_query_arguments_rule_query_id ON rule_query_arguments(rule_query_id);
 CREATE INDEX idx_rule_query_arguments_order ON rule_query_arguments(argument_order);
