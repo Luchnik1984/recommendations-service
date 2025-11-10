@@ -28,5 +28,9 @@ public interface UserDataRepository {
      */
     boolean isDepositsGreaterThanWithdrawals(UUID userId, ProductType productType);
 
+    /**
+     * Получает количество всех транзакций пользователя по продуктам указанного типа
+     */
+    int getTransactionCountByProductType(UUID userId, ProductType productType);
 }
 
