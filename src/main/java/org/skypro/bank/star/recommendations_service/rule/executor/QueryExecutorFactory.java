@@ -6,6 +6,7 @@ import org.skypro.bank.star.recommendations_service.model.dto.RecommendationDTO;
 import org.skypro.bank.star.recommendations_service.model.dto.RecommendationResponse;
 import org.skypro.bank.star.recommendations_service.model.dynamic.DynamicRule;
 import org.skypro.bank.star.recommendations_service.model.dynamic.RuleQuery;
+import org.skypro.bank.star.recommendations_service.repository.dynamic.DynamicRuleRepository;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
@@ -15,10 +16,16 @@ public class QueryExecutorFactory {
 
     private final Map<QueryType, RuleQueryExecutor> ruleQueryExecutorMap = new HashMap<>();
     private final List<RuleQueryExecutor> ruleQueryExecutors;
+    private final DynamicRuleRepository dynamicRuleRepository;
 
-    public QueryExecutorFactory(List<RuleQueryExecutor> ruleQueryExecutors) {
+    public QueryExecutorFactory(List<RuleQueryExecutor> ruleQueryExecutors, DynamicRuleRepository dynamicRuleRepository) {
         this.ruleQueryExecutors = ruleQueryExecutors;
+        this.dynamicRuleRepository = dynamicRuleRepository;
     }
+
+    //    public QueryExecutorFactory(List<RuleQueryExecutor> ruleQueryExecutors) {
+//        this.ruleQueryExecutors = ruleQueryExecutors;
+//    }
 
     @PostConstruct
     public void createMap() {
@@ -27,14 +34,23 @@ public class QueryExecutorFactory {
         }
     }
 
-    public RecommendationResponse createResponseWithRecommendations(UUID userId, DynamicRule[] dynamicRules) {
+    public List<RecommendationDTO> createResponseWithRecommendations(UUID userId) {
 
+        List<DynamicRule> dynamicRules = dynamicRuleRepository.findAllByOrderById();
+        System.out.println(dynamicRules);
         List<RecommendationDTO> recommendationDTOList = new ArrayList<>();
         for (DynamicRule rule : dynamicRules) {
             boolean allRulesPassed = true;
             for (RuleQuery ruleQuery : rule.getRule()) {
-                if (!ruleQueryExecutorMap.get(QueryType.valueOf(ruleQuery.getArguments().get(0)))
-                        .execute(userId, ruleQuery.getArguments())) {
+
+                Boolean response = ruleQueryExecutorMap.get(ruleQuery.getQuery())
+                        .execute(userId, ruleQuery.getArguments());
+
+                if(ruleQuery.isNegate()) {
+                    response = !response;
+                }
+
+                if (!response) {
                     allRulesPassed = false;
                     break;
                 }
@@ -46,7 +62,7 @@ public class QueryExecutorFactory {
                         rule.getProductText()));
             }
         }
-        return new RecommendationResponse(userId,recommendationDTOList);
+        return recommendationDTOList;
     }
 
 
