@@ -4,7 +4,7 @@ import org.skypro.bank.star.recommendations_service.configuration.Recommendation
 import org.skypro.bank.star.recommendations_service.enums.ProductType;
 import org.skypro.bank.star.recommendations_service.enums.TransactionType;
 import org.skypro.bank.star.recommendations_service.model.dto.RecommendationDTO;
-import org.skypro.bank.star.recommendations_service.repository.UserDataRepositoryImpl;
+import org.skypro.bank.star.recommendations_service.repository.UserDataRepository;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
@@ -14,10 +14,10 @@ import java.util.UUID;
 @Component
 public class Invest500RuleSet implements RecommendationRuleSet {
 
-    private final UserDataRepositoryImpl userDataRepository;
+    private final UserDataRepository userDataRepository;
     private final RecommendationRulesConfiguration rulesConfig;
 
-    public Invest500RuleSet(UserDataRepositoryImpl userDataRepository,
+    public Invest500RuleSet(UserDataRepository userDataRepository,
                             RecommendationRulesConfiguration rulesConfig) {
         this.userDataRepository = userDataRepository;
         this.rulesConfig = rulesConfig;

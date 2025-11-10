@@ -1,12 +1,11 @@
 package org.skypro.bank.star.recommendations_service.model.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import org.skypro.bank.star.recommendations_service.model.dynamic.RuleQuery;
 
 import java.util.List;
 import java.util.UUID;
 
-public record RuleRequestDTO (
+public record RuleRequestDTO(
 
         @JsonProperty("product_name")
         String productName,
@@ -17,4 +16,5 @@ public record RuleRequestDTO (
         @JsonProperty("product_text")
         String productText,
 
-        List<RuleQuery> rule){}
+        List<RuleQueryDTO> rule) {
+}
