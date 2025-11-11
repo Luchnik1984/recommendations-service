@@ -3,7 +3,7 @@ package org.skypro.bank.star.recommendations_service.service;
 import org.skypro.bank.star.recommendations_service.model.dto.RecommendationDTO;
 import org.skypro.bank.star.recommendations_service.model.dto.RecommendationResponse;
 import org.skypro.bank.star.recommendations_service.rule.RecommendationRuleSet;
-import org.skypro.bank.star.recommendations_service.rule.executor.QueryExecutorFactory;
+import org.skypro.bank.star.recommendations_service.rule.executor.DynamicRuleEngine;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -16,11 +16,11 @@ public class RecommendationService {
 
     private final List<RecommendationRuleSet> ruleSets;
 
-    QueryExecutorFactory queryExecutorFactory;
+    private final DynamicRuleEngine dynamicRuleEngine;
 
-    public RecommendationService(List<RecommendationRuleSet> ruleSets, QueryExecutorFactory queryExecutorFactory) {
+    public RecommendationService(List<RecommendationRuleSet> ruleSets, DynamicRuleEngine dynamicRuleEngine) {
         this.ruleSets = ruleSets;
-        this.queryExecutorFactory = queryExecutorFactory;
+        this.dynamicRuleEngine = dynamicRuleEngine;
     }
 
     /**
@@ -35,7 +35,7 @@ public class RecommendationService {
         List<RecommendationDTO> recommendations = addToListRecommendationWithStaticRulesForUserID(
                 ruleSets,
                 userId,
-                queryExecutorFactory.createResponseWithRecommendations(userId));
+                dynamicRuleEngine.createRecommendationDTOList(userId));
 
         return new RecommendationResponse(userId, recommendations);
     }
@@ -48,7 +48,7 @@ public class RecommendationService {
      * @return список рекомендаций DTO
      */
     public RecommendationResponse getRecommendationsForUserWithoutStaticRule(UUID userId) {
-        List<RecommendationDTO> recommendations = queryExecutorFactory.createResponseWithRecommendations(userId);
+        List<RecommendationDTO> recommendations = dynamicRuleEngine.createRecommendationDTOList(userId);
         return new RecommendationResponse(userId, recommendations);
     }
 

@@ -23,16 +23,27 @@ public class QueryExecutorFactory {
         this.dynamicRuleRepository = dynamicRuleRepository;
     }
 
-    //    public QueryExecutorFactory(List<RuleQueryExecutor> ruleQueryExecutors) {
-//        this.ruleQueryExecutors = ruleQueryExecutors;
-//    }
-
+    /**
+     * Метод создает HashMap с исполнителями правил, где ключ является QueryType,
+     * а значение - сам класс исполнитель
+     */
     @PostConstruct
     public void createMap() {
         for (RuleQueryExecutor ruleQueryExecutor : ruleQueryExecutors) {
             ruleQueryExecutorMap.put(ruleQueryExecutor.getSupportedQueryType(), ruleQueryExecutor);
         }
     }
+
+    /**
+     * Определяет обработчика для правила
+     * @param ruleQuery правило
+     * @return исполнитель
+     */
+    public RuleQueryExecutor getRuleQueryExecutor(RuleQuery ruleQuery){
+        return ruleQueryExecutorMap.get(ruleQuery.getQuery());
+    }
+
+
 
     public List<RecommendationDTO> createResponseWithRecommendations(UUID userId) {
 
