@@ -4,7 +4,7 @@ import org.skypro.bank.star.recommendations_service.enums.ComparativeType;
 import org.skypro.bank.star.recommendations_service.enums.ProductType;
 import org.skypro.bank.star.recommendations_service.enums.QueryType;
 import org.skypro.bank.star.recommendations_service.enums.TransactionType;
-import org.skypro.bank.star.recommendations_service.repository.UserDataRepositoryImpl;
+import org.skypro.bank.star.recommendations_service.repository.UserDataRepository;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -13,9 +13,9 @@ import java.util.UUID;
 @Component
 public class TransactionSumCompareDepositWithdrawQueryExecutor implements RuleQueryExecutor {
 
-    private final UserDataRepositoryImpl userDataRepository;
+    private final UserDataRepository userDataRepository;
 
-    public TransactionSumCompareDepositWithdrawQueryExecutor(UserDataRepositoryImpl userDataRepository) {
+    public TransactionSumCompareDepositWithdrawQueryExecutor(UserDataRepository userDataRepository) {
         this.userDataRepository = userDataRepository;
     }
 

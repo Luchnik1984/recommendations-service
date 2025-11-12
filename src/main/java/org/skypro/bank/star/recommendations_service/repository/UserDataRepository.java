@@ -32,5 +32,10 @@ public interface UserDataRepository {
      * Получает количество всех транзакций пользователя по продуктам указанного типа
      */
     int getTransactionCountByProductType(UUID userId, ProductType productType);
+
+    /**
+     * Получает сумму транзакций пользователя по типу продукта и типу транзакции
+     */
+    double getTransactionSumByType(UUID userId, ProductType productType, TransactionType transactionType);
 }
 
