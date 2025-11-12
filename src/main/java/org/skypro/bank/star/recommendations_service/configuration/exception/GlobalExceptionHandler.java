@@ -13,12 +13,20 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
+/**
+ * Глобальный обработчик исключений для REST API.
+ * Обеспечивает единообразную обработку ошибок и возврат структурированных ответов.
+ * Обрабатывает исключения валидации, преобразования типов и общие исключения.
+ * @see ControllerAdvice
+ */
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
     /**
-     * Ошибки @Valid (тело запроса)
+     * Обрабатывает ошибки валидации @Valid (тело запроса)
+     * Возникает при нарушении ограничений валидации в DTO.
+     * @param ex исключение MethodArgumentNotValidException
+     * @return ResponseEntity с детализированным списком ошибок валидации
      */
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
@@ -35,6 +43,9 @@ public class GlobalExceptionHandler {
 
     /**
      * Ошибки валидации параметров (например, @RequestParam)
+     * Возникает при нарушении ограничений ConstraintViolation
+     * @param ex исключение ConstraintViolationException
+     * @return ResponseEntity с детализированным списком ошибок валидации
      */
     @ExceptionHandler(ConstraintViolationException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
@@ -62,7 +73,9 @@ public class GlobalExceptionHandler {
     }
 
     /**
-     * Общий fallback
+     * Общий обработчик всех непредвиденных исключений fallback
+     * @param ex исключение любого типа
+     * @return ResponseEntity с общей информацией об ошибке сервера
      */
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
