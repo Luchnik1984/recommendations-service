@@ -11,6 +11,11 @@ import org.springframework.stereotype.Component;
 
 import java.util.*;
 
+/**
+ * Фабрика для получения исполнителей запросов динамических правил.
+ * Реализует паттерн Фабрика для создания и управления исполнителями
+ * различных типов запросов правил рекомендаций.
+ */
 @Component
 public class QueryExecutorFactory {
 
@@ -18,6 +23,11 @@ public class QueryExecutorFactory {
     private final List<RuleQueryExecutor> ruleQueryExecutors;
     private final DynamicRuleRepository dynamicRuleRepository;
 
+    /**
+     * Конструктор фабрики исполнителей запросов.
+     * @param ruleQueryExecutors список всех доступных исполнителей,
+     * автоматически внедряемых Spring
+     */
     public QueryExecutorFactory(List<RuleQueryExecutor> ruleQueryExecutors, DynamicRuleRepository dynamicRuleRepository) {
         this.ruleQueryExecutors = ruleQueryExecutors;
         this.dynamicRuleRepository = dynamicRuleRepository;
@@ -68,7 +78,7 @@ public class QueryExecutorFactory {
             }
             if (allRulesPassed) {
                 recommendationDTOList.add(new RecommendationDTO(
-                        rule.getId(),
+                        rule.getProductId(),
                         rule.getProductName(),
                         rule.getProductText()));
             }

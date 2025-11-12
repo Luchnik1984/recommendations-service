@@ -46,7 +46,7 @@ public class DynamicRuleEngine {
             }
             if (allRulesPassed) {
                 recommendationDTOList.add(new RecommendationDTO(
-                        rule.getId(),
+                        rule.getProductId(),
                         rule.getProductName(),
                         rule.getProductText()));
             }
