@@ -3,7 +3,9 @@ package org.skypro.bank.star.recommendations_service.model.dto;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import org.skypro.bank.star.recommendations_service.enums.QueryType;
+import org.skypro.bank.star.recommendations_service.repository.RuleQueryValid;
 
+@RuleQueryValid
 public record RuleQueryDTO(
         @NotNull(message = "query не должен быть null") QueryType query,
 

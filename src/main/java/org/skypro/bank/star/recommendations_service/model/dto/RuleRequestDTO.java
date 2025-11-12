@@ -12,7 +12,7 @@ public record RuleRequestDTO(
 
         @JsonProperty("product_name")
         @NotNull(message = "productName не должен быть null")
-        @Size(min = 2, max = 50, message = "productName должно быть от 2 до 50 символов")
+        @Size(min = 2, max = 1000, message = "productName должно быть от 2 до 1000 символов")
         String productName,
 
         @JsonProperty("product_id")
@@ -21,7 +21,7 @@ public record RuleRequestDTO(
 
         @JsonProperty("product_text")
         @NotNull(message = "productText не должен быть null")
-        @Size(min = 2, max = 50, message = "productText должно быть от 2 до 50 символов")
+        @Size(min = 2, max = 1000, message = "productText должно быть от 2 до 1000 символов")
         String productText,
 
         @NotNull(message = "rule не должен быть null")
