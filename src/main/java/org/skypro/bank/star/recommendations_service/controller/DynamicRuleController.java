@@ -1,5 +1,6 @@
 package org.skypro.bank.star.recommendations_service.controller;
 
+import jakarta.validation.Valid;
 import org.skypro.bank.star.recommendations_service.model.dto.ListRuleResponse;
 import org.skypro.bank.star.recommendations_service.model.dto.RuleRequestDTO;
 import org.skypro.bank.star.recommendations_service.model.dto.RuleResponse;
@@ -21,7 +22,8 @@ public class DynamicRuleController {
 
 
     @PostMapping("")
-    public ResponseEntity<RuleResponse> postDynamicRule(@RequestBody RuleRequestDTO ruleRequestDTO) {
+    public ResponseEntity<RuleResponse> postDynamicRule(
+            @RequestBody @Valid RuleRequestDTO ruleRequestDTO) {
         return ResponseEntity.ok(dynamicRuleService.postDynamicRule(ruleRequestDTO));
     }
 
