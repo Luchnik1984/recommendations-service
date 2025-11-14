@@ -1,4 +1,4 @@
-package org.skypro.bank.star.recommendations_service;
+package org.skypro.bank.star.recommendations_service.unit_tests;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
