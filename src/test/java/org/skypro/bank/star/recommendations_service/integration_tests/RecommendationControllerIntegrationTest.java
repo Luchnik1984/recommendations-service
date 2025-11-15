@@ -1,4 +1,4 @@
-package org.skypro.bank.star.recommendations_service.unit_tests;
+package org.skypro.bank.star.recommendations_service.integration_tests;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

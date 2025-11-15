@@ -1,4 +1,4 @@
-package org.skypro.bank.star.recommendations_service;
+package org.skypro.bank.star.recommendations_service.integration_tests;
 
 import org.junit.jupiter.api.Test;
 import org.skypro.bank.star.recommendations_service.enums.ProductType;
