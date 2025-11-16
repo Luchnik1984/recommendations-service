@@ -6,6 +6,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
+import org.springframework.context.annotation.Profile;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
@@ -13,18 +14,15 @@ import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+
 import javax.sql.DataSource;
 
 /**
  * Конфигурация для второй базы данных (PostgreSQL), используемой для хранения динамических правил.
- * Эта конфигурация:
- * - Настраивает DataSource для PostgreSQL с connection pool (HikariCP)
- * - Настраивает EntityManagerFactory для JPA с Hibernate
- * - Включает управление транзакциями с помощью @EnableTransactionManagement
- * - Определяет пакеты для сканирования JPA сущностей и репозиториев
- * - Интегрируется с переменными окружения из .env файла
- * Конфигурация помечена как @Primary, так как PostgreSQL будет основной БД для JPA операций,
- * в то время как H2 БД используется только для специализированных read-only запросов через JdbcTemplate.
+ * Эта конфигурация активна только в НЕ-тестовых профилях (prod, dev, default, integration-test).
+ *
+ * В тестовом профиле заменяется на TestDatabaseConfig с H2 in-memory базами.
+ *
  */
 @Configuration
 @EnableTransactionManagement
@@ -33,6 +31,7 @@ import javax.sql.DataSource;
         entityManagerFactoryRef = "dynamicRulesEntityManagerFactory",
         transactionManagerRef = "dynamicRulesTransactionManager"
 )
+@Profile("!test") // АКТИВЕН ТОЛЬКО В НЕ-ТЕСТОВЫХ ПРОФИЛЯХ (включая integration-test)
 public class DynamicRulesDatabaseConfig {
     /**
      * Создает и настраивает DataSource для PostgreSQL базы динамических правил.
@@ -102,12 +101,9 @@ public class DynamicRulesDatabaseConfig {
         // Настраиваем Hibernate как провайдера JPA
         HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
         vendorAdapter.setGenerateDdl(false); // Отключаем автоматическое создание DDL
-        vendorAdapter.setShowSql(false);     // Показывать SQL в логах (управляется через properties)
+        vendorAdapter.setShowSql(false);
 
         em.setJpaVendorAdapter(vendorAdapter);
-
-        // Дополнительные свойства Hibernate
-        // (основные свойства задаются в application.properties)
 
         return em;
     }
@@ -126,7 +122,6 @@ public class DynamicRulesDatabaseConfig {
         JpaTransactionManager transactionManager = new JpaTransactionManager();
         transactionManager.setEntityManagerFactory(dynamicRulesEntityManagerFactory().getObject());
 
-        // Дополнительные настройки транзакций
         transactionManager.setDefaultTimeout(30); // Таймаут транзакций 30 секунд
         transactionManager.setRollbackOnCommitFailure(true); // Откат при ошибке коммита
 

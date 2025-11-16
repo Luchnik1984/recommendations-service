@@ -5,9 +5,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.test.web.server.LocalServerPort;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
+import org.skypro.bank.star.recommendations_service.configuration.TestDatabaseConfig;
 import org.skypro.bank.star.recommendations_service.model.dto.RecommendationResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,6 +20,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles("test")
+@Import(TestDatabaseConfig.class)
 class RecommendationControllerIntegrationTest {
     private static final Logger logger = LoggerFactory.getLogger(RecommendationControllerIntegrationTest.class);
 
@@ -30,7 +33,9 @@ class RecommendationControllerIntegrationTest {
     private String getBaseUrl() {
         return "http://localhost:" + port;
     }
-    private final UUID EXISTING_USER = UUID.fromString("550e8400-e29b-41d4-a716-446655440000");
+
+    // Используем UUID из тестовых данных
+    private final UUID EXISTING_USER = UUID.fromString("00000000-0000-0000-0000-000000000001");
     private final UUID NON_EXISTENT_USER = UUID.fromString("99999999-9999-9999-9999-999999999999");
 
     @Test

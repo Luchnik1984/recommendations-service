@@ -1,0 +1,10 @@
+databaseChangeLog:
+  - preConditions:
+      - or:
+          - dbms:
+              type: postgresql
+          - dbms:
+              type: h2
+  - include:
+      file: changes/test-dynamic-rules-data.sql
+      relativeToChangelogFile: true
