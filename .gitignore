@@ -43,3 +43,10 @@ temp/
 # Environment configuration files
 configuration.env
 configuration.env.*
+
+# H2 Database files
+*.mv.db
+*.trace.db
+*.h2.db
+
+
