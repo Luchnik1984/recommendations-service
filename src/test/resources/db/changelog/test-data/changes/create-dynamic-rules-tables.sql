@@ -4,12 +4,11 @@
 -- ==========================================================================
 
 -- Changeset: create_dynamic_rules_table
--- Author: Test Automation
 -- Comment: Создание таблицы динамических правил (точная копия продакшн)
 
 CREATE TABLE IF NOT EXISTS dynamic_rules (
-                                             id UUID NOT NULL PRIMARY KEY,
-                                             product_name VARCHAR(255) NOT NULL,
+    id UUID NOT NULL PRIMARY KEY,
+    product_name VARCHAR(255) NOT NULL,
     product_id UUID NOT NULL,
     product_text TEXT NOT NULL
     );
@@ -20,9 +19,9 @@ COMMENT ON TABLE dynamic_rules IS 'Таблица динамических пр�
 -- Comment: Создание таблицы запросов правил
 
 CREATE TABLE IF NOT EXISTS rule_queries (
-                                            id BIGSERIAL NOT NULL PRIMARY KEY,
-                                            dynamic_rule_id UUID NOT NULL,
-                                            query_type VARCHAR(50) NOT NULL,
+    id BIGSERIAL NOT NULL PRIMARY KEY,
+    dynamic_rule_id UUID NOT NULL,
+    query_type VARCHAR(50) NOT NULL,
     negate BOOLEAN NOT NULL DEFAULT false,
     query_order INTEGER NOT NULL DEFAULT 0,
     CONSTRAINT fk_rule_queries_dynamic_rule
@@ -37,9 +36,9 @@ COMMENT ON TABLE rule_queries IS 'Таблица запросов (услови�
 -- Comment: Создание таблицы аргументов запросов
 
 CREATE TABLE IF NOT EXISTS rule_query_arguments (
-                                                    id BIGSERIAL NOT NULL PRIMARY KEY,
-                                                    rule_query_id BIGINT NOT NULL,
-                                                    argument_value VARCHAR(255) NOT NULL,
+    id BIGSERIAL NOT NULL PRIMARY KEY,
+    rule_query_id BIGINT NOT NULL,
+    argument_value VARCHAR(255) NOT NULL,
     argument_order INTEGER NOT NULL DEFAULT 0,
     CONSTRAINT fk_rule_query_arguments_rule_query
     FOREIGN KEY (rule_query_id)

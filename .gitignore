@@ -49,6 +49,4 @@ configuration.env.*
 *.trace.db
 *.h2.db
 
-Исключаем файлы БД из копирования в target
-target/classes/*.db
-target/classes/*.mv.db
+
