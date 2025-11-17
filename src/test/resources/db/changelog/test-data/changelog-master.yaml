@@ -6,5 +6,8 @@ databaseChangeLog:
           - dbms:
               type: h2
   - include:
+      file: changes/create-dynamic-rules-tables.sql
+      relativeToChangelogFile: true
+  - include:
       file: changes/test-dynamic-rules-data.sql
       relativeToChangelogFile: true

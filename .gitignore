@@ -43,3 +43,12 @@ temp/
 # Environment configuration files
 configuration.env
 configuration.env.*
+
+# H2 Database files
+*.mv.db
+*.trace.db
+*.h2.db
+
+Исключаем файлы БД из копирования в target
+target/classes/*.db
+target/classes/*.mv.db
