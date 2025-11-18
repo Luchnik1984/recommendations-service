@@ -76,4 +76,26 @@ public class UserSearchService {
             return UserSearchResult.multipleUsersFound(foundUsers);
         }
     }
+
+    /**
+     * Ищет пользователя по точному username.
+     * Согласно требованиям команды /recommend username.
+     *
+     * @param username точное имя пользователя для поиска
+     * @return UserSearchResult с найденным пользователем или NOT_FOUND
+     */
+    public UserSearchResult searchUserByUsername(String username) {
+        logger.debug("Searching users by username: '{}'", username);
+
+        if (username == null || username.trim().isEmpty()) {
+            throw new IllegalArgumentException("Username cannot be null or empty");
+        }
+
+        String trimmedUsername = username.trim();
+        List<UserInfoDto> foundUsers = userDataRepository.findActiveUsersByUsername(trimmedUsername);
+
+        logger.debug("Found {} users for username: '{}'", foundUsers.size(), trimmedUsername);
+
+        return classifySearchResult(foundUsers);
+    }
 }

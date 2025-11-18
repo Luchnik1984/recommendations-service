@@ -62,6 +62,15 @@ public interface UserDataRepository {
      */
     List<UserInfoDto> findActiveUsersByName(String searchString);
 
+    /**
+     * Ищет активных пользователей по точному username.
+     *
+     * @param username точное имя пользователя для поиска
+     * @return список найденных пользователей (обычно 0 или 1 элемент)
+     */
+    List<UserInfoDto> findActiveUsersByUsername(String username);
 }
+
+
 
 
