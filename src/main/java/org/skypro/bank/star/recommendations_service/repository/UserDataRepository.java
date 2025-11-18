@@ -2,8 +2,10 @@ package org.skypro.bank.star.recommendations_service.repository;
 
 import org.skypro.bank.star.recommendations_service.enums.ProductType;
 import org.skypro.bank.star.recommendations_service.enums.TransactionType;
+import org.skypro.bank.star.recommendations_service.model.dto.UserInfoDto;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -37,5 +39,29 @@ public interface UserDataRepository {
      * Получает сумму транзакций пользователя по типу продукта и типу транзакции
      */
     double getTransactionSumByType(UUID userId, ProductType productType, TransactionType transactionType);
+
+    /**
+     * Ищет пользователей по имени или фамилии (case-insensitive поиск).
+     * Использует частичное совпадение (LIKE) для поиска по подстроке.
+     * Возвращает список пользователей, у которых имя или фамилия содержат указанную строку.
+     *
+     * @param searchString строка для поиска (имя или фамилия)
+     * @return список найденных пользователей, отсортированный по имени и фамилии
+     * @throws IllegalArgumentException если searchString null или пустой
+     */
+    List<UserInfoDto> findUsersByName(String searchString);
+
+    /**
+     * Ищет активных пользователей по имени или фамилии (case-insensitive поиск).
+     * Возвращает только пользователей, имеющих транзакции (активных).
+     * Использует частичное совпадение (LIKE) для поиска по подстроке.
+     *
+     * @param searchString строка для поиска (имя или фамилия)
+     * @return список найденных АКТИВНЫХ пользователей, отсортированный по имени и фамилии
+     * @throws IllegalArgumentException если searchString null или пустой
+     */
+    List<UserInfoDto> findActiveUsersByName(String searchString);
+
 }
+
 

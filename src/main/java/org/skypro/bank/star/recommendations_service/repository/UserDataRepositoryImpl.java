@@ -2,11 +2,14 @@ package org.skypro.bank.star.recommendations_service.repository;
 
 import org.skypro.bank.star.recommendations_service.enums.ProductType;
 import org.skypro.bank.star.recommendations_service.enums.TransactionType;
+import org.skypro.bank.star.recommendations_service.mapper.UserMapper;
+import org.skypro.bank.star.recommendations_service.model.dto.UserInfoDto;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -76,5 +79,69 @@ public class UserDataRepositoryImpl implements UserDataRepository {
     public double getTransactionSumByType(UUID userId, ProductType productType, TransactionType transactionType) {
         BigDecimal totalAmount = getTotalAmount(userId, productType, transactionType);
         return totalAmount.doubleValue();
+    }
+
+    @Override
+    public List<UserInfoDto> findUsersByName(String searchString) {
+        if (searchString == null || searchString.trim().isEmpty()) {
+            throw new IllegalArgumentException("Search string cannot be null or empty");
+        }
+
+        String sql = """
+            SELECT 
+                u.ID, 
+                u.USERNAME, 
+                u.FIRST_NAME, 
+                u.LAST_NAME
+            FROM USERS u
+            WHERE 
+                UPPER(u.FIRST_NAME) LIKE UPPER(?) 
+                OR UPPER(u.LAST_NAME) LIKE UPPER(?)
+            ORDER BY u.FIRST_NAME, u.LAST_NAME
+            """;
+
+        String searchPattern = "%" + searchString.trim() + "%";
+
+        return jdbcTemplate.query(sql, (rs, rowNum) -> {
+            UUID id = UUID.fromString(rs.getString("ID"));
+            String username = rs.getString("USERNAME");
+            String firstName = rs.getString("FIRST_NAME");
+            String lastName = rs.getString("LAST_NAME");
+
+            return UserMapper.toUserInfoDto(id, username, firstName, lastName);
+        }, searchPattern, searchPattern);
+    }
+
+    @Override
+    public List<UserInfoDto> findActiveUsersByName(String searchString) {
+        if (searchString == null || searchString.trim().isEmpty()) {
+            throw new IllegalArgumentException("Search string cannot be null or empty");
+        }
+
+        String sql = """
+        
+                SELECT DISTINCT
+            u.ID, 
+            u.USERNAME, 
+            u.FIRST_NAME, 
+            u.LAST_NAME
+        FROM USERS u
+        INNER JOIN TRANSACTIONS t ON u.ID = t.USER_ID
+        WHERE 
+            UPPER(u.FIRST_NAME) LIKE UPPER(?) 
+            OR UPPER(u.LAST_NAME) LIKE UPPER(?)
+        ORDER BY u.FIRST_NAME, u.LAST_NAME
+        """;
+
+        String searchPattern = "%" + searchString.trim() + "%";
+
+        return jdbcTemplate.query(sql, (rs, rowNum) -> {
+            UUID id = UUID.fromString(rs.getString("ID"));
+            String username = rs.getString("USERNAME");
+            String firstName = rs.getString("FIRST_NAME");
+            String lastName = rs.getString("LAST_NAME");
+
+            return UserMapper.toUserInfoDto(id, username, firstName, lastName);
+        }, searchPattern, searchPattern);
     }
 }
