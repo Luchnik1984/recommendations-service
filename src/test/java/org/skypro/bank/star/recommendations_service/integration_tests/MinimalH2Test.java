@@ -7,14 +7,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.JdbcTemplate;
 
-import javax.sql.DataSource;
 import java.util.List;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
- * МИНИМАЛЬНЫЙ ТЕСТ H2 БАЗЫ БЕЗ SPRING BOOT
+ * МИНИМАЛЬНЫЙ ТЕСТ H2 (in memory) ТЕСТОВОй БАЗЫ 'transactions' БЕЗ SPRING BOOT
  * Создает базу вручную и проверяет таблицы
  */
 public class MinimalH2Test {

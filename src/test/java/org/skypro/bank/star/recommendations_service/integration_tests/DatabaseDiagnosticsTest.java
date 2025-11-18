@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * ПРОСТОЙ ДИАГНОСТИЧЕСКИЙ ТЕСТ.
- * Читает информацию из рабочих баз
+ * Читает информацию из тестовых баз
  */
 @SpringBootTest
 @ActiveProfiles("test")

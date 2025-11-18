@@ -13,7 +13,7 @@ import java.util.Map;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
- * ПРОСТОЙ ТЕСТ ДЛЯ ПРОВЕРКИ КОНФИГУРАЦИИ
+ * ПРОСТОЙ ТЕСТ ДЛЯ ПРОВЕРКИ КОНФИГУРАЦИИ H2( in memory) тестовых баз
  */
 @SpringBootTest
 @ActiveProfiles("test")
