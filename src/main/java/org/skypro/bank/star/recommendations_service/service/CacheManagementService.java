@@ -12,7 +12,7 @@ public class CacheManagementService {
         this.cachedUserDataRepository = cachedUserDataRepository;
     }
 
-    public void clearAllCaches(){
+    public void clearAllCaches() {
         cachedUserDataRepository.clearAllCaches();
     }
 
