@@ -15,6 +15,7 @@ import java.util.UUID;
  */
 
 @Repository
+@Qualifier("UserDataRepositoryImpl")
 public class UserDataRepositoryImpl implements UserDataRepository {
 
     private final JdbcTemplate jdbcTemplate;
