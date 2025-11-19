@@ -1,6 +1,7 @@
 package org.skypro.bank.star.recommendations_service.command.telegram;
 
 import org.skypro.bank.star.recommendations_service.service.TelegramBotFacade;
+import org.skypro.bank.star.recommendations_service.service.TelegramMessageFormatter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -15,9 +16,11 @@ public class RecommendCommand implements TelegramCommand {
     private static final Logger logger = LoggerFactory.getLogger(RecommendCommand.class);
 
     private final TelegramBotFacade telegramBotFacade;
+    private final TelegramMessageFormatter messageFormatter;
 
-    public RecommendCommand(TelegramBotFacade telegramBotFacade) {
+    public RecommendCommand(TelegramBotFacade telegramBotFacade, TelegramMessageFormatter messageFormatter) {
         this.telegramBotFacade = telegramBotFacade;
+        this.messageFormatter = messageFormatter;
         logger.debug("RecommendCommand initialized");
     }
 
@@ -31,7 +34,7 @@ public class RecommendCommand implements TelegramCommand {
         String messageText = update.getMessage().getText();
         String[] parts = messageText.split("\\s+", 2);
 
-        // Проверка наличия параметра username
+
         if (parts.length < 2 || parts[1].trim().isEmpty()) {
             logger.warn("Empty username parameter in /recommend command from chat: {}", chatId);
             return "❌ <b>Пожалуйста, укажите username пользователя.</b>\n\n<i>Пример: /recommend sheron.berge</i>";
@@ -46,7 +49,7 @@ public class RecommendCommand implements TelegramCommand {
 
             logger.debug("Command result type: {} for username: '{}'", result.getResultType(), username);
 
-            // ГАРАНТИРУЕМ, что всегда возвращаем String
+
             switch (result.getResultType()) {
                 case USER_NOT_FOUND:
                     logger.info("Sending 'user not found' response for username: '{}' to chat: {}", username, chatId);
@@ -59,7 +62,7 @@ public class RecommendCommand implements TelegramCommand {
 
                 case ERROR:
                     logger.error("Error result for username: '{}': {}", username, result.getMessage());
-                    return "❌ <b>Ошибка:</b> " + escapeHtml(result.getMessage());
+                    return messageFormatter.formatErrorMessage(result.getMessage());
 
                 default:
                     logger.error("Unknown result type: {} for username: '{}'", result.getResultType(), username);
@@ -69,7 +72,7 @@ public class RecommendCommand implements TelegramCommand {
         } catch (Exception e) {
             logger.error("Unexpected error in /recommend command for username '{}' in chat {}: {}",
                     username, chatId, e.getMessage(), e);
-            // ГАРАНТИРУЕМ возврат String даже при ошибке
+            /* ГАРАНТИРУЕМ возврат String даже при ошибке */
             return "❌ <b>Ошибка:</b> Непредвиденная ошибка при обработке запроса.";
         }
     }
@@ -79,16 +82,4 @@ public class RecommendCommand implements TelegramCommand {
         return "/recommend [username] - получить персонализированные рекомендации";
     }
 
-    /**
-     * Экранирует HTML символы для безопасного отображения.
-     */
-    private String escapeHtml(String text) {
-        if (text == null) {
-            return "";
-        }
-        return text.replace("&", "&amp;")
-                .replace("<", "&lt;")
-                .replace(">", "&gt;")
-                .replace("\"", "&quot;");
-    }
 }

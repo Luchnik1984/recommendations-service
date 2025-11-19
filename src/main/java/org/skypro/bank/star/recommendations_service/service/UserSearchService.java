@@ -33,30 +33,6 @@ public class UserSearchService {
         this.userDataRepository = userDataRepository;
     }
 
-    /**
-     * Основной метод поиска пользователей по имени или фамилии.
-     * Ищет активных пользователей, у которых имя или фамилия содержат указанную строку.
-     * Возвращает результат с классификацией согласно бизнес-требованиям.
-     *
-     * @param searchString строка для поиска (имя или фамилия)
-     * @return UserSearchResult с найденными пользователями и статусом поиска
-     * @throws IllegalArgumentException если searchString null или пустой
-     */
-    public UserSearchResult searchUser(String searchString) {
-        logger.debug("Searching users by name: '{}'", searchString);
-
-        if (searchString == null || searchString.trim().isEmpty()) {
-            throw new IllegalArgumentException("Search string cannot be null or empty");
-        }
-
-        String trimmedSearchString = searchString.trim();
-        List<UserInfoDto> foundUsers = userDataRepository.findActiveUsersByName(trimmedSearchString);
-
-        logger.debug("Found {} users for search: '{}'", foundUsers.size(), trimmedSearchString);
-
-        // Классификация результатов согласно бизнес-требованиям
-        return classifySearchResult(foundUsers);
-    }
 
     /**
      * Классифицирует результаты поиска согласно бизнес-требованиям.
@@ -78,7 +54,7 @@ public class UserSearchService {
     }
 
     /**
-     * Ищет пользователя по точному username.
+     * Ищет пользователя по username.
      * Согласно требованиям команды /recommend username.
      *
      * @param username точное имя пользователя для поиска

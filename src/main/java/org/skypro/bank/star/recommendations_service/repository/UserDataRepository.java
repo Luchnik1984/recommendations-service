@@ -40,30 +40,9 @@ public interface UserDataRepository {
      */
     double getTransactionSumByType(UUID userId, ProductType productType, TransactionType transactionType);
 
-    /**
-     * Ищет пользователей по имени или фамилии (case-insensitive поиск).
-     * Использует частичное совпадение (LIKE) для поиска по подстроке.
-     * Возвращает список пользователей, у которых имя или фамилия содержат указанную строку.
-     *
-     * @param searchString строка для поиска (имя или фамилия)
-     * @return список найденных пользователей, отсортированный по имени и фамилии
-     * @throws IllegalArgumentException если searchString null или пустой
-     */
-    List<UserInfoDto> findUsersByName(String searchString);
 
     /**
-     * Ищет активных пользователей по имени или фамилии (case-insensitive поиск).
-     * Возвращает только пользователей, имеющих транзакции (активных).
-     * Использует частичное совпадение (LIKE) для поиска по подстроке.
-     *
-     * @param searchString строка для поиска (имя или фамилия)
-     * @return список найденных АКТИВНЫХ пользователей, отсортированный по имени и фамилии
-     * @throws IllegalArgumentException если searchString null или пустой
-     */
-    List<UserInfoDto> findActiveUsersByName(String searchString);
-
-    /**
-     * Ищет активных пользователей по точному username.
+     * Ищет активных пользователей поточному username.
      *
      * @param username точное имя пользователя для поиска
      * @return список найденных пользователей (обычно 0 или 1 элемент)

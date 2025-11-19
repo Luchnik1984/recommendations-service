@@ -43,7 +43,6 @@ public record UserSearchResult(
             throw new IllegalArgumentException("SearchStatus cannot be null");
         }
 
-        // Проверка согласованности данных согласно бизнес-логике
         validateConsistency(foundUsers, searchStatus);
     }
 

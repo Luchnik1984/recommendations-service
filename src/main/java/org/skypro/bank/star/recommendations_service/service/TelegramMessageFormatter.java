@@ -48,7 +48,6 @@ public class TelegramMessageFormatter {
             RecommendationDTO recommendation = recommendations.get(i);
             sb.append(formatSingleRecommendation(i + 1, recommendation));
 
-            // Добавляем разделитель между продуктами, кроме последнего
             if (i < recommendations.size() - 1) {
                 sb.append("\n━━━━━━━━━━━━━━━━━━━━\n\n");
             }
@@ -70,8 +69,8 @@ public class TelegramMessageFormatter {
                %s
                """.formatted(
                 index,
-                escapeHtml(recommendation.name()),
-                escapeHtml(recommendation.text())
+                recommendation.name(),
+                recommendation.text()
         );
     }
 
@@ -97,17 +96,17 @@ public class TelegramMessageFormatter {
     /**
      * Форматирует сообщение об отсутствии пользователя.
      *
-     * @param searchName имя, по которому выполнялся поиск
+     * @param username имя, по которому выполнялся поиск
      * @return отформатированное сообщение об ошибке
      */
-    public String formatUserNotFoundMessage(String searchName) {
+    public String formatUserNotFoundMessage(String username) {
         return """
                ❌ <b>Пользователь не найден</b>
                
                По запросу <i>"%s"</i> пользователь не найден в системе банка.
                
                💡 <i>Проверьте правильность написания имени и фамилии.</i>
-               """.formatted(escapeHtml(searchName));
+               """.formatted(username);
     }
 
     /**
@@ -117,7 +116,7 @@ public class TelegramMessageFormatter {
      * @return отформатированное сообщение об ошибке
      */
     public String formatErrorMessage(String errorMessage) {
-        return "❌ <b>Ошибка:</b> " + escapeHtml(errorMessage);
+        return "❌ <b>Ошибка:</b> " + errorMessage;
     }
 
     /**
@@ -131,30 +130,12 @@ public class TelegramMessageFormatter {
                
                <b>Доступные команды:</b>
                /start - показать это сообщение
-               /recommend [имя] - получить персонализированные рекомендации
+               /recommend [username] - получить персонализированные рекомендации
                
-               <i>Пример: /recommend Иван</i>
+               <i>Пример: /recommend sheron.berge</i>
                
                💼 <i>Мы подберем для вас лучшие банковские продукты!</i>
                """;
     }
 
-    /**
-     * Экранирует специальные HTML символы для безопасного отображения в Telegram.
-     * Telegram поддерживает подмножество HTML, но требует экранирования.
-     *
-     * @param text текст для экранирования
-     * @return экранированный текст
-     */
-    private String escapeHtml(String text) {
-        if (text == null) {
-            return "";
-        }
-
-        return text.replace("&", "&amp;")
-                .replace("<", "&lt;")
-                .replace(">", "&gt;")
-                .replace("\"", "&quot;")
-                .replace("'", "&#39;");
-    }
 }

@@ -2,7 +2,6 @@ package org.skypro.bank.star.recommendations_service.service;
 
 import org.skypro.bank.star.recommendations_service.command.telegram.TelegramCommand;
 import org.skypro.bank.star.recommendations_service.command.telegram.TelegramCommandDispatcher;
-import org.skypro.bank.star.recommendations_service.model.dto.UserSearchResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -27,6 +26,8 @@ public class TelegramRecommendationHandler extends TelegramLongPollingBot {
 
     private final String botUsername;
     private final TelegramCommandDispatcher commandDispatcher;
+    private final TelegramMessageFormatter messageFormatter;
+
 
     /**
      * Конструктор обработчика Telegram бота.
@@ -39,12 +40,12 @@ public class TelegramRecommendationHandler extends TelegramLongPollingBot {
     public TelegramRecommendationHandler(
             @Value("${TELEGRAM_BOT_USERNAME:bank_star_recommendations_bot}") String botUsername,
             @Value("${TELEGRAM_BOT_TOKEN:}") String botToken,
-            TelegramCommandDispatcher commandDispatcher) {
+            TelegramCommandDispatcher commandDispatcher, TelegramMessageFormatter messageFormatter) {
 
         super(botToken);
         this.botUsername = botUsername;
         this.commandDispatcher = commandDispatcher;
-
+        this.messageFormatter = messageFormatter;
     }
 
     /**
@@ -60,7 +61,7 @@ public class TelegramRecommendationHandler extends TelegramLongPollingBot {
 
     /**
      * Основной метод обработки входящих сообщений от пользователей.
-     *Делегирует обработку командам через TelegramCommandDispatcher.
+     * Делегирует обработку командам через TelegramCommandDispatcher.
      *
      * @param update объект с данными входящего сообщения
      */
@@ -109,8 +110,8 @@ public class TelegramRecommendationHandler extends TelegramLongPollingBot {
      * @param errorMessage текст сообщения об ошибке
      */
     private void sendErrorMessage(Long chatId, String errorMessage) {
-        // Используем простой формат для ошибок, так как форматтер может быть недоступен
-        String message = "❌ <b>Ошибка:</b> " + escapeHtml(errorMessage);
+
+        String message = messageFormatter.formatErrorMessage(errorMessage);
         sendFormattedMessage(chatId, message);
     }
 
@@ -162,21 +163,6 @@ public class TelegramRecommendationHandler extends TelegramLongPollingBot {
      */
     private String removeHtmlTags(String htmlText) {
         return htmlText.replaceAll("<[^>]*>", "");
-    }
-
-    /**
-     * Экранирует специальные HTML символы.
-     *
-     * @param text текст для экранирования
-     * @return экранированный текст
-     */
-    private String escapeHtml(String text) {
-        if (text == null) {
-            return "";
-        }
-        return text.replace("&", "&amp;")
-                .replace("<", "&lt;")
-                .replace(">", "&gt;");
     }
 
 }

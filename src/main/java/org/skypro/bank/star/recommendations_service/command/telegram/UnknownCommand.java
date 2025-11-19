@@ -19,7 +19,7 @@ public class UnknownCommand implements TelegramCommand {
 
     @Override
     public boolean canHandle(String messageText) {
-        return true; // Обрабатывает все сообщения, которые не обработали другие
+        return true;
     }
 
     @Override

@@ -62,17 +62,7 @@ public class TelegramCommandDispatcher {
         }
 
         logger.debug("No handler found for message: {}", messageText);
-        return null; // Вернет null для неизвестных команд
+        return null;
     }
 
-    /**
-     * Возвращает список всех доступных команд с описаниями.
-     *
-     * @return список описаний команд для справки
-     */
-    public List<String> getAvailableCommands() {
-        return commands.stream()
-                .map(TelegramCommand::getDescription)
-                .toList();
-    }
 }

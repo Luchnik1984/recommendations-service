@@ -5,6 +5,7 @@ import org.skypro.bank.star.recommendations_service.model.dto.RecommendationResp
 import org.skypro.bank.star.recommendations_service.rule.RecommendationRuleSet;
 import org.skypro.bank.star.recommendations_service.rule.executor.DynamicRuleEngine;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +31,7 @@ public class RecommendationService {
      * @param userId идентификатор пользователя
      * @return список рекомендаций DTO
      */
+    @Transactional(readOnly = true)
     public RecommendationResponse getRecommendationsForUser(UUID userId) {
 
         List<RecommendationDTO> recommendations = addToListRecommendationWithStaticRulesForUserID(
