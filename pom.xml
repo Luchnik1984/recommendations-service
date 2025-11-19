@@ -85,6 +85,12 @@
 						<goals>
 							<goal>build-info</goal>
 						</goals>
+						<configuration>
+							<additionalProperties>
+								<encoding.source>UTF-8</encoding.source>
+								<encoding.reporting>UTF-8</encoding.reporting>
+							</additionalProperties>
+						</configuration>
 					</execution>
 				</executions>
 			</plugin>
