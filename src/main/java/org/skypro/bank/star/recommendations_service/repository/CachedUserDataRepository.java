@@ -13,7 +13,7 @@ import java.util.UUID;
 
 @Repository
 @Qualifier("CachedUserDataRepository")
-public class CachedUserDataRepository implements UserDataRepository{
+public class CachedUserDataRepository implements UserDataRepository {
 
     public final UserDataRepository userDataRepository;
     public final Cache<ProductTypeKey, Boolean> hasProductTypeCache;
@@ -55,7 +55,7 @@ public class CachedUserDataRepository implements UserDataRepository{
     @Override
     public int getTransactionCountByProductType(UUID userId, ProductType productType) {
         ProductTypeKey key = new ProductTypeKey(userId, productType);
-        return transactionCountCache.get(key, k-> {
+        return transactionCountCache.get(key, k -> {
             return userDataRepository.getTransactionCountByProductType(k.userId(), k.getProductType());
         });
     }
@@ -70,7 +70,7 @@ public class CachedUserDataRepository implements UserDataRepository{
     /**
      * Метод для очистки кэша
      */
-    public void clearAllCaches(){
+    public void clearAllCaches() {
         hasProductTypeCache.invalidateAll();
         totalAmountCache.invalidateAll();
         transactionCountCache.invalidateAll();
