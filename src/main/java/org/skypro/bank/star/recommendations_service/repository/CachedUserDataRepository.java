@@ -5,10 +5,12 @@ import org.skypro.bank.star.recommendations_service.cache.ProductTypeKey;
 import org.skypro.bank.star.recommendations_service.cache.TransactionTypeKey;
 import org.skypro.bank.star.recommendations_service.enums.ProductType;
 import org.skypro.bank.star.recommendations_service.enums.TransactionType;
+import org.skypro.bank.star.recommendations_service.model.dto.UserInfoDto;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.UUID;
 
 @Repository
@@ -74,6 +76,11 @@ public class CachedUserDataRepository implements UserDataRepository {
         hasProductTypeCache.invalidateAll();
         totalAmountCache.invalidateAll();
         transactionCountCache.invalidateAll();
+    }
+
+    @Override
+    public List<UserInfoDto> findActiveUsersByUsername(String username) {
+        return userDataRepository.findActiveUsersByUsername(username);
     }
 
 }

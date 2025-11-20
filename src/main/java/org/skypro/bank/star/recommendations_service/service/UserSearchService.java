@@ -5,6 +5,7 @@ import org.skypro.bank.star.recommendations_service.model.dto.UserSearchResult;
 import org.skypro.bank.star.recommendations_service.repository.UserDataRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,8 +15,8 @@ import java.util.List;
  * Обеспечивает бизнес-логику поиска и классификацию результатов
  * согласно требованиям Telegram бота.
  *
- * @see org.skypro.bank.star.recommendations_service.repository.UserDataRepository
- * @see org.skypro.bank.star.recommendations_service.model.dto.UserSearchResult
+ * @see UserDataRepository
+ * @see UserSearchResult
  */
 
 @Service
@@ -29,7 +30,7 @@ public class UserSearchService {
      *
      * @param userDataRepository репозиторий для доступа к данным пользователей
      */
-    public UserSearchService(UserDataRepository userDataRepository) {
+    public UserSearchService(@Qualifier("cachedUserDataRepository") UserDataRepository userDataRepository) {
         this.userDataRepository = userDataRepository;
     }
 
