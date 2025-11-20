@@ -2,8 +2,10 @@ package org.skypro.bank.star.recommendations_service.repository;
 
 import org.skypro.bank.star.recommendations_service.enums.ProductType;
 import org.skypro.bank.star.recommendations_service.enums.TransactionType;
+import org.skypro.bank.star.recommendations_service.model.dto.UserInfoDto;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -37,5 +39,17 @@ public interface UserDataRepository {
      * Получает сумму транзакций пользователя по типу продукта и типу транзакции
      */
     double getTransactionSumByType(UUID userId, ProductType productType, TransactionType transactionType);
+
+
+    /**
+     * Ищет активных пользователей поточному username.
+     *
+     * @param username точное имя пользователя для поиска
+     * @return список найденных пользователей (обычно 0 или 1 элемент)
+     */
+    List<UserInfoDto> findActiveUsersByUsername(String username);
 }
+
+
+
 

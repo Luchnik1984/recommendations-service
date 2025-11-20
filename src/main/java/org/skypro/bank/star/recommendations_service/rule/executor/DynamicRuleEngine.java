@@ -4,6 +4,8 @@ import org.skypro.bank.star.recommendations_service.model.dto.RecommendationDTO;
 import org.skypro.bank.star.recommendations_service.model.dynamic.DynamicRule;
 import org.skypro.bank.star.recommendations_service.model.dynamic.RuleQuery;
 import org.skypro.bank.star.recommendations_service.repository.dynamic.DynamicRuleRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -12,6 +14,8 @@ import java.util.UUID;
 
 @Component
 public class DynamicRuleEngine {
+
+    private static final Logger logger = LoggerFactory.getLogger(DynamicRuleEngine.class);
 
     private final QueryExecutorFactory queryExecutorFactory;
     private final DynamicRuleRepository dynamicRuleRepository;
@@ -29,7 +33,7 @@ public class DynamicRuleEngine {
     public List<RecommendationDTO> createRecommendationDTOList(UUID userId) {
 
         List<DynamicRule> dynamicRules = dynamicRuleRepository.findAllByOrderById();
-        System.out.println(dynamicRules);
+        logger.debug("Processing {} dynamic rules for user: {}", dynamicRules.size(), userId);
         List<RecommendationDTO> recommendationDTOList = new ArrayList<>();
         for (DynamicRule rule : dynamicRules) {
             boolean allRulesPassed = true;
@@ -51,6 +55,7 @@ public class DynamicRuleEngine {
                         rule.getProductText()));
             }
         }
+        logger.debug("Found {} recommendations for user: {}", recommendationDTOList.size(), userId);
         return recommendationDTOList;
     }
 
