@@ -1,4 +1,4 @@
-package org.skypro.bank.star.recommendations_service.model;
+package org.skypro.bank.star.recommendations_service.model.statistics;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

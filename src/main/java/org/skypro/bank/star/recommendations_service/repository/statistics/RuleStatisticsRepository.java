@@ -1,6 +1,6 @@
-package org.skypro.bank.star.recommendations_service.repository;
+package org.skypro.bank.star.recommendations_service.repository.statistics;
 
-import org.skypro.bank.star.recommendations_service.model.RuleStatistics;
+import org.skypro.bank.star.recommendations_service.model.statistics.RuleStatistics;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
