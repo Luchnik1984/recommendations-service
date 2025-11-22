@@ -35,8 +35,8 @@ public class CachedUserDataRepository implements UserDataRepository {
     @Override
     public boolean hasProductType(UUID userId, ProductType productType) {
         ProductTypeKey key = new ProductTypeKey(userId, productType);
-        return hasProductTypeCache.get(key, k ->
-                userDataRepository.hasProductType(k.getUserId(), k.getProductType()));
+        return Boolean.TRUE.equals(hasProductTypeCache.get(key, k ->
+                userDataRepository.hasProductType(k.userId(), k.productType())));
     }
 
     @Override
@@ -57,9 +57,9 @@ public class CachedUserDataRepository implements UserDataRepository {
     @Override
     public int getTransactionCountByProductType(UUID userId, ProductType productType) {
         ProductTypeKey key = new ProductTypeKey(userId, productType);
-        return transactionCountCache.get(key, k -> {
-            return userDataRepository.getTransactionCountByProductType(k.userId(), k.getProductType());
-        });
+        Integer result = transactionCountCache.get(key, k ->
+                userDataRepository.getTransactionCountByProductType(k.userId(), k.productType()));
+        return result != null ? result : 0;
     }
 
     @Override

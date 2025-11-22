@@ -1,0 +1,41 @@
+flowchart TD
+    A[ Входящие запросы] --> B{Тип запроса}
+
+B -->|Рекомендации| C[Recommendation Service]
+B -->|Telegram| D[TelegramBot Facade]
+B -->|Управление правилами| E[DynamicRule Service]
+B -->|Статистика| F[RuleStatistics Service]
+
+D --> C
+D --> G[UserSearch Service]
+
+C --> H[Проверка правил]
+H --> I[Статические правила]
+H --> J[DynamicRule Engine]
+
+J --> K[ RuleStatistics Service]
+
+I --> L[Данные пользователя]
+J --> L
+
+L --> M[CachedUserData Repository]
+M --> N{Кеш?}
+N -->|Есть| O[ Данные из кеша]
+N -->|Нет| P[️ Запрос к H2]
+
+E --> Q[Валидация правил]
+E --> R[Создание статистики]
+Q --> S[️ Сохранение в PostgreSQL]
+R --> S
+
+F --> T[ Получение статистики]
+T --> S
+
+O --> U[Формирование ответа]
+P --> U
+
+U --> V{Формат ответа}
+V -->|REST API| W[ JSON рекомендаций]
+V -->|Telegram| X[ HTML сообщение]
+V -->|Управление| Y[ Подтверждение]
+V -->|Статистика| Z[ JSON статистики]
