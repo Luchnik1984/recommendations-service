@@ -43,12 +43,12 @@ public class DatabaseDiagnosticsTest {
         System.out.println("-".repeat(30));
 
         try {
-            // Базовая проверка
+
             Integer result = transactionsJdbcTemplate.queryForObject("SELECT 1", Integer.class);
             assertEquals(1, result);
             System.out.println("✅ Database connection: OK");
 
-            // Таблицы
+
             List<String> tables = transactionsJdbcTemplate.queryForList(
                     "SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'PUBLIC' ORDER BY TABLE_NAME",
                     String.class
@@ -57,7 +57,7 @@ public class DatabaseDiagnosticsTest {
             System.out.println(" Tables (" + tables.size() + "):");
             tables.forEach(table -> System.out.println("   └─ " + table));
 
-            // Данные
+
             printTableInfo("USERS", " Users");
             printTableInfo("PRODUCTS", " Products");
             printTableInfo("TRANSACTIONS", " Transactions");
@@ -72,8 +72,8 @@ public class DatabaseDiagnosticsTest {
         System.out.println("-".repeat(30));
 
         try {
-            // Используем transactions JdbcTemplate для проверки dynamic rules таблиц
-            // (они создаются в той же H2 in-memory базе Hibernate'ом)
+            /* Используем transactions JdbcTemplate для проверки dynamic rules таблиц,
+            они создаются в той же H2 in-memory базе Hibernate'ом*/
 
             boolean hasDynamicRules = tableExists("DYNAMIC_RULES");
             boolean hasRuleQueries = tableExists("RULE_QUERIES");
@@ -149,13 +149,13 @@ public class DatabaseDiagnosticsTest {
     void quickHealthCheck() {
         System.out.println("\n QUICK HEALTH CHECK");
 
-        // Transactions DB
+
         assertNotNull(transactionsJdbcTemplate);
         Integer result = transactionsJdbcTemplate.queryForObject("SELECT 1", Integer.class);
         assertEquals(1, result);
         System.out.println("✅ Transactions DB: HEALTHY");
 
-        // Essential tables
+
         assertTrue(tableExists("USERS"), "USERS should exist");
         assertTrue(tableExists("PRODUCTS"), "PRODUCTS should exist");
         assertTrue(tableExists("TRANSACTIONS"), "TRANSACTIONS should exist");

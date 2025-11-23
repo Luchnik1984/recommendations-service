@@ -1,6 +1,7 @@
 package org.skypro.bank.star.recommendations_service.repository;
 
 import jakarta.validation.Constraint;
+import jakarta.validation.Payload;
 
 import java.lang.annotation.*;
 
@@ -9,4 +10,7 @@ import java.lang.annotation.*;
 @Constraint(validatedBy = RuleQueryValidator.class)
 public @interface RuleQueryValid {
     String message() default "Некорректные аргументы в RuleQueryDTO";
+
+    Class<?>[] groups() default {};
+    Class<? extends Payload>[] payload() default {};
 }

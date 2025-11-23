@@ -21,6 +21,8 @@ public class DynamicRuleEngine {
     
     private static final Logger log = LoggerFactory.getLogger(DynamicRuleEngine.class);
 
+    private static final Logger logger = LoggerFactory.getLogger(DynamicRuleEngine.class);
+
     private final QueryExecutorFactory queryExecutorFactory;
     private final DynamicRuleRepository dynamicRuleRepository;
     private final RuleStatisticsRepository ruleStatisticsRepository;
@@ -42,6 +44,7 @@ public class DynamicRuleEngine {
     public List<RecommendationDTO> createRecommendationDTOList(UUID userId) {
 
         List<DynamicRule> dynamicRules = dynamicRuleRepository.findAllByOrderById();
+        logger.debug("Processing {} dynamic rules for user: {}", dynamicRules.size(), userId);
         List<RecommendationDTO> recommendationDTOList = new ArrayList<>();
 
         for (DynamicRule rule : dynamicRules) {
@@ -69,6 +72,7 @@ public class DynamicRuleEngine {
                 ));
             }
         }
+        logger.debug("Found {} recommendations for user: {}", recommendationDTOList.size(), userId);
         return recommendationDTOList;
     }
 

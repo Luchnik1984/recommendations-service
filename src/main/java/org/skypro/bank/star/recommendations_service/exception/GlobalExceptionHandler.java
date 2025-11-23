@@ -1,4 +1,4 @@
-package org.skypro.bank.star.recommendations_service.configuration.exception;
+package org.skypro.bank.star.recommendations_service.exception;
 
 import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.HttpStatus;

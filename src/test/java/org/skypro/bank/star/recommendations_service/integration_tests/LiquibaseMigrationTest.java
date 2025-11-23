@@ -29,7 +29,7 @@ public class LiquibaseMigrationTest {
 
     @BeforeAll
     static void setup() {
-        // Загружаем переменные из configuration.env
+
         loadEnvFile("configuration.env");
         loadEnvFile("configuration.env.dev");
     }
