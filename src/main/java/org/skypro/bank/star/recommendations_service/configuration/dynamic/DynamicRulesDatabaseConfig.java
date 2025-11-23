@@ -27,7 +27,10 @@ import javax.sql.DataSource;
 @Configuration
 @EnableTransactionManagement
 @EnableJpaRepositories(
-        basePackages = "org.skypro.bank.star.recommendations_service.repository.dynamic",
+        basePackages = {
+                "org.skypro.bank.star.recommendations_service.repository.dynamic",
+                "org.skypro.bank.star.recommendations_service.repository.statistics"
+        },
         entityManagerFactoryRef = "dynamicRulesEntityManagerFactory",
         transactionManagerRef = "dynamicRulesTransactionManager"
 )
@@ -96,7 +99,10 @@ public class DynamicRulesDatabaseConfig {
         ));
 
         // Указываем пакеты, в которых находятся JPA сущности для динамических правил
-        em.setPackagesToScan("org.skypro.bank.star.recommendations_service.model.dynamic");
+        em.setPackagesToScan(
+                "org.skypro.bank.star.recommendations_service.model.dynamic",
+                "org.skypro.bank.star.recommendations_service.model.statistics"
+        );
 
         // Настраиваем Hibernate как провайдера JPA
         HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();

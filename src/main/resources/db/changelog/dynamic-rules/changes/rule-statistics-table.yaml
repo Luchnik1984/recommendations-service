@@ -1,0 +1,66 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-rule-statistics-table
+      author: developer
+      description: Create rule_statistics table for tracking rule trigger counts
+      changes:
+        - createTable:
+            tableName: rule_statistics
+            remarks: Table for storing statistics about rule triggers
+            columns:
+              - column:
+                  name: rule_id
+                  type: UUID
+                  remarks: Rule identifier (primary key)
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+
+              - column:
+                  name: trigger_count
+                  type: BIGINT
+                  remarks: Counter for rule trigger events
+                  defaultValue: 0
+                  constraints:
+                    nullable: false
+
+  - changeSet:
+      id: add-fk-rule-statistics
+      author: developer
+      description: Add foreign key constraint to dynamic_rules table
+      changes:
+        - addForeignKeyConstraint:
+            baseTableName: rule_statistics
+            baseColumnNames: rule_id
+            constraintName: fk_rule_statistics_rule_id
+            referencedTableName: dynamic_rules
+            referencedColumnNames: id
+            onDelete: CASCADE
+            onUpdate: RESTRICT
+
+  - changeSet:
+      id: create-index-trigger-count
+      author: developer
+      description: Create index on trigger_count column for query optimization
+      changes:
+        - createIndex:
+            indexName: idx_rule_statistics_trigger_count
+            tableName: rule_statistics
+            unique: false
+            columns:
+              - column:
+                  name: trigger_count
+                  descending: true
+
+  - changeSet:
+      id: create-index-rule-id
+      author: developer
+      description: Create index on rule_id column
+      changes:
+        - createIndex:
+            indexName: idx_rule_statistics_rule_id
+            tableName: rule_statistics
+            unique: true
+            columns:
+              - column:
+                  name: rule_id
