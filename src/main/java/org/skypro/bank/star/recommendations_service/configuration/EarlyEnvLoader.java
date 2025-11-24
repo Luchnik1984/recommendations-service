@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 
+import java.util.Arrays;
 import java.util.Properties;
 
 @Component
@@ -21,7 +22,16 @@ public class EarlyEnvLoader implements EnvironmentPostProcessor {
         System.out.println(" === РАННЯЯ ЗАГРУЗКА .env ФАЙЛОВ ===");
 
         loadEnvFile("configuration.env", environment);
-        loadEnvFile("configuration.env.dev", environment);
+
+        String[] activeProfiles = environment.getActiveProfiles();
+        boolean isDevActive = Arrays.stream(activeProfiles)
+                .anyMatch(profile -> profile.equals("dev"));
+
+        // Загружаем dev конфиг ТОЛЬКО если явно указан профиль dev
+        if (isDevActive) {
+            loadEnvFile("configuration.env.dev", environment);
+            System.out.println("Dev profile active - loaded configuration.env.dev");
+        }
     }
 
     private void loadEnvFile(String filename, ConfigurableEnvironment environment) {

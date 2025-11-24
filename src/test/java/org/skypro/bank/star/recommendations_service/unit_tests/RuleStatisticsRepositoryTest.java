@@ -1,5 +1,6 @@
 package org.skypro.bank.star.recommendations_service.unit_tests;
 
+import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.skypro.bank.star.recommendations_service.model.statistics.RuleStatistics;
@@ -21,6 +22,9 @@ class RuleStatisticsRepositoryTest {
 
     @Autowired
     private RuleStatisticsRepository statisticsRepository;
+
+    @Autowired
+    private EntityManager entityManager;
 
     private UUID testRuleId;
 
@@ -49,7 +53,7 @@ class RuleStatisticsRepositoryTest {
         statisticsRepository.save(stats);
 
         int updated = statisticsRepository.incrementCounter(testRuleId);
-        statisticsRepository.flush();
+        entityManager.clear();
 
         assertThat(updated).isEqualTo(1);
         Optional<RuleStatistics> result = statisticsRepository.findById(testRuleId);
@@ -67,7 +71,7 @@ class RuleStatisticsRepositoryTest {
         for (int i = 0; i < 5; i++) {
             statisticsRepository.incrementCounter(testRuleId);
         }
-        statisticsRepository.flush();
+        entityManager.clear();
 
         Optional<RuleStatistics> result = statisticsRepository.findById(testRuleId);
         assertThat(result).isPresent();
