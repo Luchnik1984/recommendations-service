@@ -15,10 +15,23 @@ public class CacheManagementService {
         this.cachedUserDataRepository = cachedUserDataRepository;
     }
 
+    /**
+     * Очистка всех кешей сервиса
+     */
     public void clearAllCaches()
     { logger.info("Clearing all caches");
         cachedUserDataRepository.clearAllCaches();
         logger.info("All caches cleared successfully");
+    }
+
+    /**
+     * Очистка кеша поиска пользователей.
+     * Вызывается автоматически при добавлении/изменении пользователей
+     */
+    public void clearUserSearchCache() {
+        logger.info("Clearing user search cache");
+        cachedUserDataRepository.clearAllCaches();
+        logger.info("User search cache cleared");
     }
 
 }

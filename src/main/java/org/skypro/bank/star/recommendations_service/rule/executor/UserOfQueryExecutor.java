@@ -3,7 +3,6 @@ package org.skypro.bank.star.recommendations_service.rule.executor;
 import org.skypro.bank.star.recommendations_service.enums.ProductType;
 import org.skypro.bank.star.recommendations_service.enums.QueryType;
 import org.skypro.bank.star.recommendations_service.repository.UserDataRepository;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -14,7 +13,7 @@ public class UserOfQueryExecutor implements RuleQueryExecutor{
 
     private final UserDataRepository userDataRepository;
 
-    public UserOfQueryExecutor(@Qualifier("CachedUserDataRepository") UserDataRepository userDataRepository) {
+    public UserOfQueryExecutor( UserDataRepository userDataRepository) {
 
         this.userDataRepository = userDataRepository;
     }

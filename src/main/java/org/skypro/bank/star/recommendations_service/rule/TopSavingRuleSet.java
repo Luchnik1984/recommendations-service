@@ -5,7 +5,6 @@ import org.skypro.bank.star.recommendations_service.enums.ProductType;
 import org.skypro.bank.star.recommendations_service.enums.TransactionType;
 import org.skypro.bank.star.recommendations_service.model.dto.RecommendationDTO;
 import org.skypro.bank.star.recommendations_service.repository.UserDataRepository;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
@@ -18,7 +17,7 @@ public class TopSavingRuleSet implements RecommendationRuleSet {
     private final UserDataRepository userDataRepository;
     private final RecommendationRulesConfiguration rulesConfig;
 
-    public TopSavingRuleSet(@Qualifier("CachedUserDataRepository") UserDataRepository userDataRepository
+    public TopSavingRuleSet( UserDataRepository userDataRepository
             , RecommendationRulesConfiguration rulesConfig) {
         this.userDataRepository = userDataRepository;
         this.rulesConfig = rulesConfig;

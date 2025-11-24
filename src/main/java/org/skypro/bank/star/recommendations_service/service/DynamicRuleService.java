@@ -83,7 +83,6 @@ public class DynamicRuleService {
         DynamicRule rule = dynamicRuleRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Rule with id " + id + " not found"));
 
-        // Удаление статистики при удалении правила
         ruleStatisticsRepository.deleteByRuleId(id);
         log.info("Deleted statistics for rule {}", id);
 

@@ -7,6 +7,7 @@ import org.skypro.bank.star.recommendations_service.enums.ProductType;
 import org.skypro.bank.star.recommendations_service.enums.TransactionType;
 import org.skypro.bank.star.recommendations_service.model.dto.UserInfoDto;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Repository;
 
 import java.math.BigDecimal;
@@ -14,6 +15,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Repository
+@Primary
 @Qualifier("CachedUserDataRepository")
 public class CachedUserDataRepository implements UserDataRepository {
 
@@ -77,6 +79,7 @@ public class CachedUserDataRepository implements UserDataRepository {
         totalAmountCache.invalidateAll();
         transactionCountCache.invalidateAll();
     }
+
 
     @Override
     public List<UserInfoDto> findActiveUsersByUsername(String username) {

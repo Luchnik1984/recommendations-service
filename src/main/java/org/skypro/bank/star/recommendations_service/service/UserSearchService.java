@@ -29,8 +29,9 @@ public class UserSearchService {
      * Конструктор сервиса поиска пользователей.
      *
      * @param userDataRepository репозиторий для доступа к данным пользователей
+     *                           прямой доступ, без кэша.
      */
-    public UserSearchService(@Qualifier("cachedUserDataRepository") UserDataRepository userDataRepository) {
+    public UserSearchService(@Qualifier("UserDataRepositoryImpl") UserDataRepository userDataRepository) {
         this.userDataRepository = userDataRepository;
     }
 

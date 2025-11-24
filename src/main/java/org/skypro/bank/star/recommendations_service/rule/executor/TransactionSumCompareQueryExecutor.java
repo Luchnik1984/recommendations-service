@@ -5,7 +5,6 @@ import org.skypro.bank.star.recommendations_service.enums.ProductType;
 import org.skypro.bank.star.recommendations_service.enums.QueryType;
 import org.skypro.bank.star.recommendations_service.enums.TransactionType;
 import org.skypro.bank.star.recommendations_service.repository.UserDataRepository;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -17,7 +16,7 @@ public class TransactionSumCompareQueryExecutor implements RuleQueryExecutor {
     private final UserDataRepository userDataRepository;
 
     public TransactionSumCompareQueryExecutor(
-            @Qualifier("CachedUserDataRepository") UserDataRepository userDataRepository) {
+             UserDataRepository userDataRepository) {
         this.userDataRepository = userDataRepository;
     }
 
