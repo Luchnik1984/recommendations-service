@@ -25,6 +25,7 @@ public class UserSearchService {
 
     private final UserDataRepository userDataRepository;
 
+
     /**
      * Конструктор сервиса поиска пользователей.
      *
