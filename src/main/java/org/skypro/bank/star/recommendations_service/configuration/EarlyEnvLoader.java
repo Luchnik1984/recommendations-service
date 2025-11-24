@@ -10,7 +10,6 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 
-import java.util.Arrays;
 import java.util.Properties;
 
 @Component
@@ -21,16 +20,20 @@ public class EarlyEnvLoader implements EnvironmentPostProcessor {
                                        SpringApplication application) {
         System.out.println(" === РАННЯЯ ЗАГРУЗКА .env ФАЙЛОВ ===");
 
+        // Всегда загружаем основной конфиг
         loadEnvFile("configuration.env", environment);
 
-        String[] activeProfiles = environment.getActiveProfiles();
-        boolean isDevActive = Arrays.stream(activeProfiles)
-                .anyMatch(profile -> profile.equals("dev"));
+        // Определяем активный профиль ИЗ .env файлов
+        String activeProfile = environment.getProperty("SPRING_PROFILES_ACTIVE");
 
         // Загружаем dev конфиг ТОЛЬКО если явно указан профиль dev
-        if (isDevActive) {
+        if ("dev".equals(activeProfile)) {
             loadEnvFile("configuration.env.dev", environment);
             System.out.println("Dev profile active - loaded configuration.env.dev");
+        } else if (activeProfile != null && !activeProfile.trim().isEmpty()) {
+            System.out.println(activeProfile + " profile active - using configuration.env");
+        } else {
+            System.out.println("No active profile - using default configuration from configuration.env");
         }
     }
 
@@ -41,7 +44,6 @@ public class EarlyEnvLoader implements EnvironmentPostProcessor {
                 Properties properties = PropertiesLoaderUtils.loadProperties(resource);
                 environment.getPropertySources()
                         .addFirst(new PropertiesPropertySource(filename, properties));
-
 
                 properties.forEach((key, value) -> {
                     String keyStr = (String) key;
