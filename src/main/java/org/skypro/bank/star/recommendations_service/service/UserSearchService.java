@@ -35,7 +35,6 @@ public class UserSearchService {
         this.userDataRepository = userDataRepository;
     }
 
-
     /**
      * Классифицирует результаты поиска согласно бизнес-требованиям.
      * Определяет статус поиска на основе количества найденных пользователей.
