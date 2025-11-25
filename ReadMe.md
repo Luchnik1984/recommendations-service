@@ -205,6 +205,14 @@ notepad configuration.env.dev
   ./mvnw package
 ```
 
+# Swagger документация
+#### По умолчанию порт 8080, если назначили другой порт, отредактируйте ссылку
+- Swagger UI (графический интерфейс):
+  http://localhost:8080/swagger-ui.html
+####
+- OpenAPI JSON (сырая спецификация):
+  http://localhost:8080/v3/api-docs
+
 ### Ключевые архитектурные решения:
 
 1. **Разделение ответственности**: Четкое разделение на слои (Presentation, Service, Business Rules, Data Access)
