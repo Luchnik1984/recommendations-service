@@ -89,9 +89,9 @@
 ## Конфигурация
 
 ### Переменные окружения (.env файлы):
-- `configuration.env` - общие настройки
+- `configuration.env` - продакшен
 - `configuration.env.dev` - разработка
-- `configuration.env.test` - тестирование
+
 
 ### Основные настройки:
 - Порт приложения
@@ -191,15 +191,21 @@ nano configuration.env.dev
 notepad configuration.env
 notepad configuration.env.dev  
 ```
-# 2. Запуск приложения
+
+# 2. Сборка пакета
+- Собранный пакет (JAR файл) - это готовое к запуску приложение.
+- Запустите `./mvnw package` для сборки.
+
+```bash
+  ./mvnw package
+```
+
+# 3. Запуск приложения
 ```bash
   ./mvnw spring-boot:run
 ```
 #### Для остановки приложения Ctrl+C затем 'Y'
 
-# 3. Сборка пакета 
-- Собранный пакет (JAR файл) - это готовое к запуску приложение.
-- Запустите `./mvnw package` для сборки.
 
 ```bash
   ./mvnw package

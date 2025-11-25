@@ -1,7 +1,8 @@
-package org.skypro.bank.star.recommendations_service.service;
+package org.skypro.bank.star.recommendations_service.telegram;
 
-import org.skypro.bank.star.recommendations_service.command.telegram.TelegramCommand;
-import org.skypro.bank.star.recommendations_service.command.telegram.TelegramCommandDispatcher;
+import org.skypro.bank.star.recommendations_service.telegram.command.TelegramCommand;
+import org.skypro.bank.star.recommendations_service.telegram.command.TelegramCommandDispatcher;
+import org.skypro.bank.star.recommendations_service.telegram.formater.TelegramMessageFormatter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;

@@ -1,4 +1,4 @@
-package org.skypro.bank.star.recommendations_service.configuration.dynamic;
+package org.skypro.bank.star.recommendations_service.configuration.database;
 
 import com.zaxxer.hikari.HikariDataSource;
 import org.springframework.beans.factory.annotation.Value;
@@ -20,9 +20,8 @@ import javax.sql.DataSource;
 /**
  * Конфигурация для второй базы данных (PostgreSQL), используемой для хранения динамических правил.
  * Эта конфигурация активна только в НЕ-тестовых профилях (prod, dev, default, integration-test).
- *
+ * <p>
  * В тестовом профиле заменяется на TestDatabaseConfig с H2 in-memory базами.
- *
  */
 @Configuration
 @EnableTransactionManagement
@@ -44,7 +43,7 @@ public class DynamicRulesDatabaseConfig {
      * Аннотация @Primary указывает, что этот DataSource должен использоваться по умолчанию
      * для всех операций JPA, если не указано иное.
      *
-     * @param url URL базы данных PostgreSQL (из .env или application.properties)
+     * @param url      URL базы данных PostgreSQL (из .env или application.properties)
      * @param username имя пользователя PostgreSQL (из .env или application.properties)
      * @param password пароль пользователя PostgreSQL (из .env или application.properties)
      * @return настроенный DataSource для PostgreSQL с HikariCP connection pool

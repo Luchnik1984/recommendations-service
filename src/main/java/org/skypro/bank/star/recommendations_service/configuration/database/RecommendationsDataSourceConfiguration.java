@@ -1,4 +1,4 @@
-package org.skypro.bank.star.recommendations_service.configuration;
+package org.skypro.bank.star.recommendations_service.configuration.database;
 
 import com.zaxxer.hikari.HikariDataSource;
 import org.springframework.beans.factory.annotation.Qualifier;

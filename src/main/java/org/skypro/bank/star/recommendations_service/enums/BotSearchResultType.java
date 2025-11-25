@@ -1,10 +1,12 @@
 package org.skypro.bank.star.recommendations_service.enums;
 
+import org.skypro.bank.star.recommendations_service.telegram.TelegramBotFacade;
+
 /**
  * Перечисление типов результата поиска для Telegram бота.
  * Определяет возможные исходы операции поиска пользователя и получения рекомендаций.
  *
- * @see org.skypro.bank.star.recommendations_service.service.TelegramBotFacade
+ * @see TelegramBotFacade
  */
 public enum BotSearchResultType {
 
