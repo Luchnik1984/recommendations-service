@@ -1,0 +1,12 @@
+databaseChangeLog:
+  - preConditions:
+      - dbms:
+          type: postgresql
+  - include:
+      file: changes/create-dynamic-rules-tables.sql
+      relativeToChangelogFile: true
+
+
+  - include:
+      file: changes/rule-statistics-table.yaml
+      relativeToChangelogFile: true
