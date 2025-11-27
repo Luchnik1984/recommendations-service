@@ -1,6 +1,6 @@
-package org.skypro.bank.star.recommendations_service.command.telegram;
+package org.skypro.bank.star.recommendations_service.telegram.command;
 
-import org.skypro.bank.star.recommendations_service.service.TelegramRecommendationHandler;
+import org.skypro.bank.star.recommendations_service.telegram.TelegramRecommendationHandler;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
 /**

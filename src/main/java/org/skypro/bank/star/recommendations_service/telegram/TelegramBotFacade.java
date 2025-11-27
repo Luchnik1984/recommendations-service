@@ -1,9 +1,12 @@
-package org.skypro.bank.star.recommendations_service.service;
+package org.skypro.bank.star.recommendations_service.telegram;
 
 import org.skypro.bank.star.recommendations_service.enums.BotSearchResultType;
 import org.skypro.bank.star.recommendations_service.model.dto.RecommendationResponse;
 import org.skypro.bank.star.recommendations_service.model.dto.UserInfoDto;
 import org.skypro.bank.star.recommendations_service.model.dto.UserSearchResult;
+import org.skypro.bank.star.recommendations_service.service.RecommendationService;
+import org.skypro.bank.star.recommendations_service.service.UserSearchService;
+import org.skypro.bank.star.recommendations_service.telegram.formater.TelegramMessageFormatter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;

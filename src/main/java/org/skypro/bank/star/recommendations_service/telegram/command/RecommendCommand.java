@@ -1,7 +1,7 @@
-package org.skypro.bank.star.recommendations_service.command.telegram;
+package org.skypro.bank.star.recommendations_service.telegram.command;
 
-import org.skypro.bank.star.recommendations_service.service.TelegramBotFacade;
-import org.skypro.bank.star.recommendations_service.service.TelegramMessageFormatter;
+import org.skypro.bank.star.recommendations_service.telegram.TelegramBotFacade;
+import org.skypro.bank.star.recommendations_service.telegram.formater.TelegramMessageFormatter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;

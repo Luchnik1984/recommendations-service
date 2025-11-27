@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.skypro.bank.star.recommendations_service.model.dto.RecommendationDTO;
 import org.skypro.bank.star.recommendations_service.model.dto.RecommendationResponse;
 import org.skypro.bank.star.recommendations_service.model.dto.UserInfoDto;
-import org.skypro.bank.star.recommendations_service.service.TelegramMessageFormatter;
+import org.skypro.bank.star.recommendations_service.telegram.formater.TelegramMessageFormatter;
 
 import java.util.Arrays;
 import java.util.List;

@@ -1,5 +1,11 @@
 package org.skypro.bank.star.recommendations_service.controller.statistics;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.ExampleObject;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.skypro.bank.star.recommendations_service.model.dto.statistics.RuleStat;
 import org.skypro.bank.star.recommendations_service.model.dto.statistics.RuleStatsResponse;
 import org.skypro.bank.star.recommendations_service.service.statistics.RuleStatisticsService;
@@ -17,6 +23,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/rule")
+@Tag(name = "Статистика правил", description = "API для получения статистики срабатываний правил")
 public class RuleStatisticsController {
 
     private static final Logger log = LoggerFactory.getLogger(RuleStatisticsController.class);
@@ -31,6 +38,8 @@ public class RuleStatisticsController {
      * Получение статистики срабатываний всех правил.
      * Возвращает статистику в JSON формате: {"stats": [{"rule_id": "...", "count": "..."}]}
      */
+    @Operation(summary = "Получить статистику срабатываний всех правил")
+    @ApiResponse(responseCode = "200", description = "Статистика успешно получена")
     @GetMapping("/stats")
     public ResponseEntity<RuleStatsResponse> getRuleStatistics() {
         try {
@@ -47,6 +56,31 @@ public class RuleStatisticsController {
      * Получение статистики для конкретного правила.
      * Возвращает JSON {"rule_id": "...", "count": ...} или 404 если не найдено.
      */
+    @Operation(summary = "Получить статистику срабатываний правила по Id")
+    @ApiResponse(responseCode = "200", description = "Статистика успешно получена",
+            content = @Content(schema = @Schema(implementation = RuleStatsResponse.class),
+                    examples = @ExampleObject(
+                            value = """
+                                    {
+                                      "stats": [
+                                        {
+                                          "rule_id": "d1111111-1111-1111-1111-111111111111",
+                                          "count": 15
+                                        },
+                                        {
+                                          "rule_id": "d2222222-2222-2222-2222-222222222222",
+                                          "count": 8
+                                        },
+                                        {
+                                          "rule_id": "d3333333-3333-3333-3333-333333333333",
+                                          "count": 0
+                                        }
+                                      ]
+                                    }
+                                    """
+                    ))
+    )
+    @ApiResponse(responseCode = "404", description = "Правило не найдено")
     @GetMapping("/stats/{ruleId}")
     public ResponseEntity<RuleStat> getRuleStatisticById(@PathVariable String ruleId) {
         try {

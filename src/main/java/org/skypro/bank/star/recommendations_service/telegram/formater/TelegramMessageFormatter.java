@@ -1,8 +1,10 @@
-package org.skypro.bank.star.recommendations_service.service;
+package org.skypro.bank.star.recommendations_service.telegram.formater;
 
 import org.skypro.bank.star.recommendations_service.model.dto.RecommendationDTO;
 import org.skypro.bank.star.recommendations_service.model.dto.RecommendationResponse;
 import org.skypro.bank.star.recommendations_service.model.dto.UserInfoDto;
+import org.skypro.bank.star.recommendations_service.telegram.TelegramBotFacade;
+import org.skypro.bank.star.recommendations_service.telegram.TelegramRecommendationHandler;
 import org.springframework.stereotype.Component;
 
 import java.util.List;

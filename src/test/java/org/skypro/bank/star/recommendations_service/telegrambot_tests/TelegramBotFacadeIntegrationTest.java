@@ -1,7 +1,7 @@
 package org.skypro.bank.star.recommendations_service.telegrambot_tests;
 
 import org.junit.jupiter.api.Test;
-import org.skypro.bank.star.recommendations_service.service.TelegramBotFacade;
+import org.skypro.bank.star.recommendations_service.telegram.TelegramBotFacade;
 import org.skypro.bank.star.recommendations_service.enums.BotSearchResultType; // Добавляем импорт
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
